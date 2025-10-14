@@ -7,25 +7,27 @@ namespace projektas.Data.repositories
     {
         Task<IEnumerable<Product>> GetAll();
         Task<Product> Get(int id);
-        Task<Product> Create();
+        Task<Product> Create(Product product);
         Task<Product> Put();
         Task Delete();
     }
-    public class ProductsRepositories
+    public class ProductsRepositories : IProductRepository
     {
         public async Task<IEnumerable<Product>> GetAll()
         {
             await Task.Delay(10);
-            var products = new List<Product>
+            List<Product> products = new List<Product>
             {
                new Access_control
                 {
+                   Id = 0,
                     Name = "RFID Access Controller",
                     Description = "Access control unit for gates",
                     Price = 199.99m
                 },
                 new Gate_engines
                 {
+                    Id = 1,
                     Name = "Sliding Gate Motor",
                     Description = "Motor for sliding gates",
                     Price = 799.50m,
@@ -34,6 +36,7 @@ namespace projektas.Data.repositories
                 },
                 new Poles
                 {
+                    Id = 2,
                     Name = "Steel Pole",
                     Description = "3-meter galvanized steel pole",
                     Price = 150.00m,
@@ -43,6 +46,7 @@ namespace projektas.Data.repositories
                 },
                 new Gates
                 {
+                    Id = 3,
                     Name = "Double Swing Gate",
                     Description = "Automated double gate with sensors",
                     Price = 1200.00m,
@@ -53,6 +57,7 @@ namespace projektas.Data.repositories
                 },
                 new Gadgets
                 {
+                    Id = 4,
                     Name = "GSM Module",
                     Description = "Gate opener via mobile network",
                     Price = 99.99m,
@@ -65,7 +70,7 @@ namespace projektas.Data.repositories
         {
             await Task.Delay(10); // Simulate async work
 
-            var product = new Gadgets
+            Product product = new Gadgets
             {
                 Name = "GSM Module",
                 Description = "Gate opener via mobile network",
@@ -75,11 +80,12 @@ namespace projektas.Data.repositories
 
             return product;
         }
-        public async Task<Product> Create()
+        public async Task<Product> Create(Product product)
         {
             await Task.Delay(10);
             return new Gadgets
             {
+                Id = product.Id,
                 Name = "GSM Module",
                 Description = "Gate opener via mobile network",
                 Price = 99.99m,

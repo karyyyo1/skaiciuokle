@@ -9,7 +9,33 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[projektas.Data.entities.Product, projektas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[projektas.Data.dtos.ProductDto, projektas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "projektas.Controllers.ProductController",
+    "Method": "Post",
+    "RelativePath": "api/products",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productDto",
+        "Type": "projektas.Data.dtos.ProductPostDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "projektas.Data.dtos.ProductDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -35,7 +61,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "projektas.Data.entities.Product",
+        "Type": "projektas.Data.dtos.ProductDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

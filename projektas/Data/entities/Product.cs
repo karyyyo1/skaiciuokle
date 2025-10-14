@@ -1,5 +1,20 @@
 ﻿namespace projektas.Data.entities
 {
+    /*
+     * id
+     * name
+     * description
+     * price
+     * tipas (vartai, stulpai, uzpildas, automatika, automatikos priedai, varteliai,
+     * ilgis
+     * plotis
+     * aukstis
+     * atidarymo tipas
+     * kiekis
+     * spalva
+     * uzpildo tipas
+     * automatikos tipas(greitaeige, letaeige)
+     */
     public enum ProductType
     {
         access_control, //ieigos kontrole
@@ -7,7 +22,7 @@
         poles, // stulpai
         fence, // uzpildas
         gate, // vartai
-        gadgets // gsm, etc.
+        gadgets, // gsm, etc.
     }
     // Abstract base class
     public abstract class Product
@@ -37,8 +52,6 @@
         push, //stumdomi
         two_gates //dviveriai
     }
-
-
     // Derived class for Electronics
     public class Poles : Product
     {
@@ -58,6 +71,7 @@
     public class Gadgets : Product
     {
         public string Connection { get; set; }
+        public int relays { get; set; }
         public override ProductType Type => ProductType.gadgets;
     }
 }

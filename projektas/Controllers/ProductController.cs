@@ -19,16 +19,50 @@ namespace projektas.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<ProductDto>> GetAll()
         {
-            var products = await _repository.GetAll(); // Await the task first
+            var products = await _repository.GetAll();
+            return products.Select(o => _mapper.Map<ProductDto>(o));
+        }
 
-            return (IEnumerable<Product>)products.Select(o => _mapper.Map<ProductDto>(o));
-        }
         [HttpGet("{id}")]
-        public async Task<Product> Get(int id)
+        public async Task<ActionResult<ProductDto>> Get(int id)
         {
-            return await _repository.Get(id);
+            var product = await _repository.Get(id);
+            if (product == null)
+            {
+                return NotFound($"Product not found with this id: '{id}' ");
+            }
+
+            return Ok(_mapper.Map<ProductDto>(product));
         }
+        [HttpPost]
+        public async Task<ActionResult<ProductDto>> Post(ProductPostDto productDto)
+        {
+            Product product = productDto.Type switch
+            {
+                ProductType.access_control => new Access_control
+                {
+                    Name = productDto.Name,
+                    Description = productDto.Description
+                },
+                ProductType.gate_engine => new Gate_engines
+                {
+                    Name = productDto.Name,
+                    Description = productDto.Description
+                },
+                ProductType.gadgets => new Gadgets
+                {
+                    Name = productDto.Name,
+                    Description = productDto.Description
+                },
+                _ => throw new ArgumentException("Unknown product type")
+            };
+
+            await _repository.Create(product);
+
+            return Created($"/api/products/{product.Id}", _mapper.Map<ProductDto>(product));
+        }
+
     }
 }
