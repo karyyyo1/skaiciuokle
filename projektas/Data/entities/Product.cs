@@ -1,4 +1,7 @@
-﻿namespace projektas.Data.entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace projektas.Data.entities
 {
     /*
      * id
@@ -17,61 +20,78 @@
      */
     public enum ProductType
     {
-        access_control, //ieigos kontrole
-        gate_engine, // pavaros
-        poles, // stulpai
-        fence, // uzpildas
-        gate, // vartai
-        gadgets, // gsm, etc.
+        access_control,
+        gate_engine,
+        poles,
+        fence,
+        gate,
+        gadgets
     }
-    // Abstract base class
+
+    public enum GateType
+    {
+        push,
+        two_gates
+    }
+
+    public enum FenceType
+    {
+        sukos,
+        segmentas,
+        polisadas,
+        skarda
+    }
+
+    [Table("products")]
     public abstract class Product
     {
+        [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? Description { get; set; }
         public decimal Price { get; set; }
         public abstract ProductType Type { get; }
     }
 
-    // Derived class for access_control
-    public class Access_control : Product
+    public class AccessControl : Product
     {
         public override ProductType Type => ProductType.access_control;
     }
 
-    // Derived class for gates_engines
-    public class Gate_engines : Product
+    public class GateEngine : Product
     {
-        public GateType Gatetype { get; set; }
-        public bool fast { get; set; }
+        public GateType? GateType { get; set; }
+        public bool? Fast { get; set; }
         public override ProductType Type => ProductType.gate_engine;
     }
-    public enum GateType
+
+    public class Pole : Product
     {
-        push, //stumdomi
-        two_gates //dviveriai
-    }
-    // Derived class for Electronics
-    public class Poles : Product
-    {
-        public int width { get; set; }
-        public int lenght { get; set; }
-        public int height { get; set; }
+        public int? Width { get; set; }
+        public int? Length { get; set; }
+        public int? Height { get; set; }
         public override ProductType Type => ProductType.poles;
     }
-    public class Gates : Product
+
+    public class Gate : Product
     {
-        public int width { get; set; }
-        public int lenght { get; set; }
-        public int height { get; set; }
-        public GateType Gatetype { get; set; }
+        public int? Width { get; set; }
+        public int? Length { get; set; }
+        public int? Height { get; set; }
+        public GateType? GateType { get; set; }
         public override ProductType Type => ProductType.gate;
     }
-    public class Gadgets : Product
+
+    public class Gadget : Product
     {
-        public string Connection { get; set; }
-        public int relays { get; set; }
+        public string? Connection { get; set; }
+        public int? Relays { get; set; }
         public override ProductType Type => ProductType.gadgets;
+    }
+
+    public class Fence : Product
+    {
+        public FenceType? FillType { get; set; }
+        public override ProductType Type => ProductType.fence;
     }
 }

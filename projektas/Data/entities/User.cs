@@ -7,7 +7,6 @@ namespace projektas.Data.entities
     {
         admin,
         manager,
-        courier,
         client
     }
     [Table("users")]

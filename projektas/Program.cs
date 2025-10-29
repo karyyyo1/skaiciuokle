@@ -1,13 +1,17 @@
-using projektas.Data.repositories;
-
+using Microsoft.EntityFrameworkCore;
+using projektas.Data;
+using System;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
-builder.Services.AddScoped<IProductRepository, ProductsRepositories>();
-builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 34))
+    ));
 
 var app = builder.Build();
 
