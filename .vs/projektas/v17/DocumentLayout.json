@@ -3,28 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\orderproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\orderproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\controllers\\documentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\controllers\\documentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\orderjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\orderjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\jobs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\jobs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\dto\\orderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\dto\\orderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\dto\\orderproductdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\dto\\orderproductdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\dto\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\dto\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\comment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,36 +35,64 @@
       "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\document.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\dto\\documentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\dto\\documentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\orderproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\orderproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\orderjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\orderjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\jobs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\jobs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\projektas.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\projektas.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\data\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|c:\\users\\dell\\desktop\\unikas\\7_pusm\\saitynai\\skaiciuokle\\projektas\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{40308BBC-02F7-4764-B566-9AEFA42E3E24}|projektas\\projektas.csproj|solutionrelative:projektas\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,34 +102,113 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Program.cs",
-              "RelativeDocumentMoniker": "projektas\\Program.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Program.cs",
-              "RelativeToolTip": "projektas\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "Order.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Order.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\entities\\Order.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Order.cs",
+              "RelativeToolTip": "projektas\\Data\\entities\\Order.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAkwCoAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T11:24:37.316Z",
+              "WhenOpened": "2025-10-29T15:09:51.445Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "projektas\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "projektas\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Product.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\entities\\Product.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Product.cs",
+              "RelativeToolTip": "projektas\\Data\\entities\\Product.cs",
+              "ViewState": "AgIAAGkAAAAAAAAAAAD4v3kAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T11:24:35.953Z",
+              "WhenOpened": "2025-10-12T16:29:05.769Z",
               "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "projektas\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "projektas\\Controllers\\ProductController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAA8wB8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-14T10:39:42.539Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OrderProductDto.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\dto\\OrderProductDto.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\dto\\OrderProductDto.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\dto\\OrderProductDto.cs",
+              "RelativeToolTip": "projektas\\Data\\dto\\OrderProductDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T02:26:25.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OrderDto.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\dto\\OrderDto.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\dto\\OrderDto.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\dto\\OrderDto.cs",
+              "RelativeToolTip": "projektas\\Data\\dto\\OrderDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T04:10:08.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "projektas\\Controllers\\OrderController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "projektas\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAowEgAAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T19:52:22.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DocumentController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\DocumentController.cs",
+              "RelativeDocumentMoniker": "projektas\\Controllers\\DocumentController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\DocumentController.cs",
+              "RelativeToolTip": "projektas\\Controllers\\DocumentController.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAwEcAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T01:35:38.698Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ProductDto.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\dto\\ProductDto.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\dto\\ProductDto.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\dto\\ProductDto.cs",
+              "RelativeToolTip": "projektas\\Data\\dto\\ProductDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T01:51:16.325Z",
               "EditorCaption": ""
             },
             {
@@ -112,87 +219,9 @@
               "RelativeDocumentMoniker": "projektas\\Data\\entities\\Comment.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Comment.cs",
               "RelativeToolTip": "projektas\\Data\\entities\\Comment.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAkwCEAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-29T15:15:27.545Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Client.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Client.cs",
-              "RelativeDocumentMoniker": "projektas\\Data\\entities\\Client.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Client.cs",
-              "RelativeToolTip": "projektas\\Data\\entities\\Client.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T15:15:02.749Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Admin.cs",
-              "RelativeDocumentMoniker": "projektas\\Data\\entities\\Admin.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Admin.cs",
-              "RelativeToolTip": "projektas\\Data\\entities\\Admin.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T15:14:55.085Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "jobs.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\jobs.cs",
-              "RelativeDocumentMoniker": "projektas\\Data\\entities\\jobs.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\jobs.cs",
-              "RelativeToolTip": "projektas\\Data\\entities\\jobs.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T14:53:26.284Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "OrderJob.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\OrderJob.cs",
-              "RelativeDocumentMoniker": "projektas\\Data\\entities\\OrderJob.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\OrderJob.cs",
-              "RelativeToolTip": "projektas\\Data\\entities\\OrderJob.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T15:05:32.513Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "appDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\appDbContext.cs",
-              "RelativeDocumentMoniker": "projektas\\Data\\appDbContext.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\appDbContext.cs",
-              "RelativeToolTip": "projektas\\Data\\appDbContext.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAwwDwAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T14:38:50.019Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "OrderProduct.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\OrderProduct.cs",
-              "RelativeDocumentMoniker": "projektas\\Data\\entities\\OrderProduct.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\OrderProduct.cs",
-              "RelativeToolTip": "projektas\\Data\\entities\\OrderProduct.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T15:06:30.911Z",
               "EditorCaption": ""
             },
             {
@@ -203,7 +232,7 @@
               "RelativeDocumentMoniker": "projektas\\Data\\entities\\Document.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Document.cs",
               "RelativeToolTip": "projektas\\Data\\entities\\Document.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwCUAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-29T15:15:14.662Z",
               "EditorCaption": ""
@@ -211,79 +240,170 @@
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "DocumentDto.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\dto\\DocumentDto.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\dto\\DocumentDto.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\dto\\DocumentDto.cs",
+              "RelativeToolTip": "projektas\\Data\\dto\\DocumentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T02:44:29.627Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "OrderProduct.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\OrderProduct.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\entities\\OrderProduct.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\OrderProduct.cs",
+              "RelativeToolTip": "projektas\\Data\\entities\\OrderProduct.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-29T15:06:30.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "OrderJob.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\OrderJob.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\entities\\OrderJob.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\OrderJob.cs",
+              "RelativeToolTip": "projektas\\Data\\entities\\OrderJob.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-29T15:05:32.513Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "jobs.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\jobs.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\entities\\jobs.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\jobs.cs",
+              "RelativeToolTip": "projektas\\Data\\entities\\jobs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-29T14:53:26.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "projektas\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "projektas\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T02:50:18.574Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "Manager.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Manager.cs",
               "RelativeDocumentMoniker": "projektas\\Data\\entities\\Manager.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Manager.cs",
               "RelativeToolTip": "projektas\\Data\\entities\\Manager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-29T15:14:48.022Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Order.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Order.cs",
-              "RelativeDocumentMoniker": "projektas\\Data\\entities\\Order.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Order.cs",
-              "RelativeToolTip": "projektas\\Data\\entities\\Order.cs",
+              "DocumentIndex": 16,
+              "Title": "projektas",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\projektas.csproj",
+              "RelativeDocumentMoniker": "projektas\\projektas.csproj",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\projektas.csproj",
+              "RelativeToolTip": "projektas\\projektas.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T15:09:51.445Z",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-31T01:54:01.502Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Product.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Product.cs",
-              "RelativeDocumentMoniker": "projektas\\Data\\entities\\Product.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Product.cs",
-              "RelativeToolTip": "projektas\\Data\\entities\\Product.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAYwD0AAAAFAAAAAAAAAA==",
+              "DocumentIndex": 17,
+              "Title": "CommentController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\CommentController.cs",
+              "RelativeDocumentMoniker": "projektas\\Controllers\\CommentController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\CommentController.cs",
+              "RelativeToolTip": "projektas\\Controllers\\CommentController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAzwBoAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T16:29:05.769Z",
+              "WhenOpened": "2025-10-30T22:59:01.531Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 18,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Admin.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\entities\\Admin.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Admin.cs",
+              "RelativeToolTip": "projektas\\Data\\entities\\Admin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-29T15:14:55.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Client.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Client.cs",
+              "RelativeDocumentMoniker": "projektas\\Data\\entities\\Client.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\Client.cs",
+              "RelativeToolTip": "projektas\\Data\\entities\\Client.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-29T15:15:02.749Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "projektas\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\UserController.cs",
+              "RelativeToolTip": "projektas\\Controllers\\UserController.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAkwEEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T22:58:01.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\User.cs",
               "RelativeDocumentMoniker": "projektas\\Data\\entities\\User.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Data\\entities\\User.cs",
               "RelativeToolTip": "projektas\\Data\\entities\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-14T19:09:45.579Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\ProductController.cs",
-              "RelativeDocumentMoniker": "projektas\\Controllers\\ProductController.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Controllers\\ProductController.cs",
-              "RelativeToolTip": "projektas\\Controllers\\ProductController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T10:39:42.539Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "projektas\\appsettings.Development.json",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\appsettings.Development.json",
-              "RelativeToolTip": "projektas\\appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 22,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "projektas\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\Properties\\launchSettings.json",
+              "RelativeToolTip": "projektas\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-17T00:29:26.936Z",
+              "WhenOpened": "2025-10-30T18:17:59.953Z",
               "EditorCaption": ""
             }
           ]

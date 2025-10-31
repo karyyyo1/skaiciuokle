@@ -1,97 +1,135 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace projektas.Data.entities
 {
-    /*
-     * id
-     * name
-     * description
-     * price
-     * tipas (vartai, stulpai, uzpildas, automatika, automatikos priedai, varteliai,
-     * ilgis
-     * plotis
-     * aukstis
-     * atidarymo tipas
-     * kiekis
-     * spalva
-     * uzpildo tipas
-     * automatikos tipas(greitaeige, letaeige)
-     */
+    // Enums remain the same
     public enum ProductType
     {
-        access_control,
-        gate_engine,
-        poles,
-        fence,
-        gate,
-        gadgets
+        none = 0,
+        access_control = 1,
+        gate_engine = 2,
+        poles = 3,
+        fence = 4,
+        gate = 5,
+        gadgets = 6,
+        jobs = 7
     }
 
     public enum GateType
     {
-        push,
-        two_gates
+        push = 1,
+        two_gates = 2
     }
 
     public enum FenceType
     {
-        sukos,
-        segmentas,
-        polisadas,
-        skarda
+        sukos = 1,
+        segmentas = 2,
+        polisadas = 3,
+        skarda = 4
     }
 
+    // --- Base Product Class ---
     [Table("products")]
     public abstract class Product
     {
         [Key]
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string? Description { get; set; }
-        public decimal Price { get; set; }
-        public abstract ProductType Type { get; }
+        [Column("id")]
+        public ulong Id { get; set; } // bigint(20) UNSIGNED
+
+        [Required]
+        [Column("name")]
+        public string Name { get; set; } = string.Empty; // varchar(255) NOT NULL
+
+        [Column("description")]
+        public string? Description { get; set; } // varchar(1000) DEFAULT NULL
+
+        [Required]
+        [Column("price")]
+        [Precision(10, 2)]
+        public decimal Price { get; set; } // decimal(10,2) NOT NULL
+
+        [Required]
+        [Column("type")]
+        public ProductType Type { get; protected set; } // enum('...') NOT NULL
+
+        // --- Common/Nullable Properties for the TPH table ---
+
+        [Column("width")]
+        public int? Width { get; set; } // int(11) DEFAULT NULL
+
+        [Column("length")]
+        public int? Length { get; set; } // int(11) DEFAULT NULL
+
+        [Column("height")]
+        public int? Height { get; set; } // int(11) DEFAULT NULL
+
+        [Column("connection")]
+        public string? Connection { get; set; } // varchar(255) DEFAULT NULL
+
+        [Column("relays")]
+        public int? Relays { get; set; } // int(11) DEFAULT NULL
+
+        [Column("quantity")]
+        public int? Quantity { get; set; } // int(11) DEFAULT NULL
+
+        [Column("color")]
+        public string? Color { get; set; } // varchar(100) DEFAULT NULL
+    }
+    public class Jobs : Product
+    {
+        public Jobs() => Type = ProductType.jobs;
     }
 
     public class AccessControl : Product
     {
-        public override ProductType Type => ProductType.access_control;
+        public AccessControl() => Type = ProductType.access_control;
     }
 
     public class GateEngine : Product
     {
-        public GateType? GateType { get; set; }
-        public bool? Fast { get; set; }
-        public override ProductType Type => ProductType.gate_engine;
+        public GateEngine() => Type = ProductType.gate_engine;
+
+        [Column("gatetype")]
+        public GateType? GateType { get; set; } // Mapped from your 'gatetype'
+
+        [Column("fast")]
+        public bool? Fast { get; set; } // Mapped from your 'fast' (assuming tinyint(1))
     }
 
     public class Pole : Product
     {
-        public int? Width { get; set; }
-        public int? Length { get; set; }
-        public int? Height { get; set; }
-        public override ProductType Type => ProductType.poles;
+        public Pole() => Type = ProductType.poles;
     }
 
     public class Gate : Product
     {
-        public int? Width { get; set; }
-        public int? Length { get; set; }
-        public int? Height { get; set; }
-        public GateType? GateType { get; set; }
-        public override ProductType Type => ProductType.gate;
+        public Gate() => Type = ProductType.gate;
+
+        // Width, Length, and Height are in the base Product
+
+        [Column("gatetype")]
+        public GateType? GateType { get; set; } // Mapped from your 'gatetype'
     }
 
     public class Gadget : Product
     {
-        public string? Connection { get; set; }
-        public int? Relays { get; set; }
-        public override ProductType Type => ProductType.gadgets;
+        public Gadget() => Type = ProductType.gadgets;
+
+        [Column("connection")]
+        public string? Connection { get; set; } // Mapped from your 'connection'
+
+        [Column("relays")]
+        public int? Relays { get; set; } // Mapped from your 'relays'
     }
 
     public class Fence : Product
     {
-        public FenceType? FillType { get; set; }
-        public override ProductType Type => ProductType.fence;
+        public Fence() => Type = ProductType.fence;
+
+        [Column("filltype")]
+        public FenceType? FillType { get; set; } // Mapped from your 'filltype'
     }
 }

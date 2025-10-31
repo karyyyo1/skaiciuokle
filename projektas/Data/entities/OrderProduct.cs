@@ -18,10 +18,6 @@ namespace projektas.Data.entities
         [Column("quantity")]
         public int Quantity { get; set; } = 1;
 
-        [Column("price_each")]
-        [Precision(10, 2)]
-        public decimal PriceEach { get; set; }
-
         // Navigation properties
         public Order Order { get; set; } = null!;
         public Product Product { get; set; } = null!;

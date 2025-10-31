@@ -5,9 +5,9 @@ namespace projektas.Data.entities
 {
     public enum UserRole
     {
-        admin,
-        manager,
-        client
+        admin = 1,
+        manager = 2,
+        client = 3
     }
     [Table("users")]
     public class User

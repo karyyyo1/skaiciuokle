@@ -10,34 +10,53 @@ namespace projektas.Data
         {
         }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Job> Jobs { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderJob> OrderJobs { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<Manager> Manager { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<Client> Clients { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Table name
-            modelBuilder.Entity<Product>().ToTable("products");
-
-            // Configure inheritance (Table-per-hierarchy)
             modelBuilder.Entity<Product>()
-                .HasDiscriminator<ProductType>("type")
-                .HasValue<AccessControl>(ProductType.access_control)
-                .HasValue<GateEngine>(ProductType.gate_engine)
-                .HasValue<Pole>(ProductType.poles)
-                .HasValue<Fence>(ProductType.fence)
-                .HasValue<Gate>(ProductType.gate)
-                .HasValue<Gadget>(ProductType.gadgets);
-            modelBuilder.Entity<Job>().ToTable("jobs");
-            modelBuilder.Entity<Order>().ToTable("orders");
+            .ToTable("products")
+            .HasDiscriminator<ProductType>("Type")
+            .HasValue<AccessControl>(ProductType.access_control)
+            .HasValue<GateEngine>(ProductType.gate_engine)
+            .HasValue<Pole>(ProductType.poles)
+            .HasValue<Fence>(ProductType.fence)
+            .HasValue<Gate>(ProductType.gate)
+            .HasValue<Gadget>(ProductType.gadgets);
+            modelBuilder.Entity<GateEngine>(entity =>
+            {
+                entity.Property(e => e.GateType).HasColumnName("gatetype");
+                entity.Property(e => e.Fast).HasColumnName("fast");
+            });
 
+            // Gate Mappings
+            modelBuilder.Entity<Gate>(entity =>
+            {
+                entity.Property(e => e.GateType).HasColumnName("gatetype");
+            });
+            modelBuilder.Entity<Fence>(entity =>
+            {
+                entity.Property(f => f.FillType).HasColumnName("filltype");
+            });
+/*
+            modelBuilder.Entity<Job>().ToTable("jobs");*/
+            modelBuilder.Entity<Order>().ToTable("orders");
+/*
             modelBuilder.Entity<OrderJob>()
-               .HasKey(oj => new { oj.OrderId, oj.JobId });
+               .HasKey(oj => new { oj.OrderId, oj.JobId });*/
 
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.OrderId, op.ProductId });
-
+/*
             modelBuilder.Entity<OrderJob>()
               .HasOne(oj => oj.Order)
               .WithMany(o => o.OrderJobs)
@@ -46,7 +65,7 @@ namespace projektas.Data
             modelBuilder.Entity<OrderJob>()
                 .HasOne(oj => oj.Job)
                 .WithMany()
-                .HasForeignKey(oj => oj.JobId);
+                .HasForeignKey(oj => oj.JobId);*/
 
             modelBuilder.Entity<OrderProduct>()
                 .HasOne(op => op.Order)
@@ -57,6 +76,27 @@ namespace projektas.Data
                 .HasOne(op => op.Product)
                 .WithMany()
                 .HasForeignKey(op => op.ProductId);
+
+            modelBuilder.Entity<Document>()
+                .ToTable("documents")
+                .HasOne(d => d.Order)
+                .WithMany(o => o.Documents) // make sure Order entity has ICollection<Document> Documents { get; set; }
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // --- Comments ---
+            modelBuilder.Entity<Comment>()
+                .ToTable("comments")
+                .HasOne(c => c.Order)
+                .WithMany(o => o.Comments) // make sure Order entity has ICollection<Comment> Comments { get; set; }
+                .HasForeignKey(c => c.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany() // if you want back-reference, change to .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

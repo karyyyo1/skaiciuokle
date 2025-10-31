@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using projektas.Data;
+using projektas.Data.dto;
 using projektas.Data.entities;
 
 namespace projektas.Controllers
@@ -18,79 +19,161 @@ namespace projektas.Controllers
 
         // GET: api/orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetAll()
+        public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAllOrders()
         {
-            var orders = await _context.Orders.ToListAsync();
-            return Ok(orders);
+            var orders = await _context.Orders
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product) // Include product details if needed
+                .OrderByDescending(o => o.CreatedAt)
+                .ToListAsync();
+
+            var orderDtos = orders.Select(MapToResponseDto).ToList();
+            return Ok(orderDtos);
         }
 
         // GET: api/orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetById(ulong id)
+        public async Task<ActionResult<OrderResponseDto>> GetOrder(ulong id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product) // Include product details if needed
+                .FirstOrDefaultAsync(o => o.Id == id);
+
             if (order == null)
                 return NotFound();
 
-            return Ok(order);
+            var orderDto = MapToResponseDto(order);
+            return Ok(orderDto);
+        }
+        private OrderResponseDto MapToResponseDto(Order order)
+        {
+            return new OrderResponseDto
+            {
+                Id = order.Id,
+                ClientId = order.ClientId,
+                ManagerId = order.ManagerId,
+                Status = order.Status,
+                TotalPrice = order.TotalPrice,
+                OrderProducts = order.OrderProducts?
+                    .Select(op => new OrderProductDto
+                    {
+                        ProductId = op.ProductId,
+                        Quantity = op.Quantity,
+                        // Add product details if needed:
+                        // ProductName = op.Product?.Name,
+                        // UnitPrice = op.Product?.Price
+                    })
+                    .ToList() ?? new List<OrderProductDto>()
+            };
         }
 
         // POST: api/orders
         [HttpPost]
-        public async Task<ActionResult<Order>> Create(Order order)
+        public async Task<ActionResult<OrderResponseDto>> CreateOrder([FromBody] OrderDto? orderDto)
         {
-            order.CreatedAt = DateTime.UtcNow;
-            order.UpdatedAt = DateTime.UtcNow;
+            if (orderDto == null)
+                return BadRequest("Order data is required.");
+
+            if (orderDto.ClientId == 0)
+                return BadRequest("ClientId is required.");
+
+            if (orderDto.OrderProducts == null || !orderDto.OrderProducts.Any())
+                return BadRequest("At least one product is required in the order.");
+
+            // Map DTO to EF entity
+            var order = new Order
+            {
+                ClientId = orderDto.ClientId,
+                ManagerId = orderDto.ManagerId,
+                Status = orderDto.Status,
+                TotalPrice = orderDto.TotalPrice,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                OrderProducts = orderDto.OrderProducts
+                    .Select(op => new OrderProduct
+                    {
+                        ProductId = op.ProductId,
+                        Quantity = op.Quantity
+                    })
+                    .ToList()
+            };
 
             _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); // order.Id is now generated
 
-            return CreatedAtAction(nameof(GetById), new { id = order.Id }, order);
+            // Map saved entity to response DTO
+            var responseDto = new OrderResponseDto
+            {
+                Id = order.Id,
+                ClientId = order.ClientId,
+                ManagerId = order.ManagerId,
+                Status = order.Status,
+                TotalPrice = order.TotalPrice,
+                OrderProducts = order.OrderProducts
+                    .Select(op => new OrderProductDto
+                    {
+                        ProductId = op.ProductId,
+                        Quantity = op.Quantity
+                    })
+                    .ToList()
+            };
+
+            return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, responseDto);
         }
+
 
         // PUT: api/orders/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(ulong id, Order order)
+        public async Task<IActionResult> Update(ulong id, [FromBody] OrderDto? orderDto)
         {
-            if (id != order.Id)
-                return BadRequest();
+            if (orderDto == null)
+                return BadRequest("Order data is required.");
 
-            order.UpdatedAt = DateTime.UtcNow;
+            var existingOrder = await _context.Orders
+                .Include(o => o.OrderProducts)
+                .FirstOrDefaultAsync(o => o.Id == id);
 
-            _context.Entry(order).State = EntityState.Modified;
+            if (existingOrder == null) return NotFound();
 
-            try
+            // Update main fields
+            existingOrder.ManagerId = orderDto.ManagerId;
+            existingOrder.Status = orderDto.Status;
+            existingOrder.TotalPrice = orderDto.TotalPrice;
+            existingOrder.UpdatedAt = DateTime.UtcNow;
+
+            // Update products
+            existingOrder.OrderProducts.Clear();
+            if (orderDto.OrderProducts != null && orderDto.OrderProducts.Any())
             {
-                await _context.SaveChangesAsync();
+                foreach (var opDto in orderDto.OrderProducts)
+                {
+                    existingOrder.OrderProducts.Add(new OrderProduct
+                    {
+                        OrderId = existingOrder.Id,
+                        ProductId = opDto.ProductId,
+                        Quantity = opDto.Quantity
+                    });
+                }
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
+
 
         // DELETE: api/orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(ulong id)
         {
             var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-                return NotFound();
+            if (order == null) return NotFound();
 
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool OrderExists(ulong id)
-        {
-            return _context.Orders.Any(e => e.Id == id);
         }
     }
 }

@@ -6,10 +6,10 @@ namespace projektas.Data.entities
 {
     public enum OrderStatus
     {
-        pending,
-        processing,
-        completed,
-        cancelled
+        pending = 1,
+        processing = 2,
+        completed = 3,
+        cancelled = 4
     }
 
     [Table("orders")]
@@ -39,7 +39,9 @@ namespace projektas.Data.entities
 
         [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
-        public ICollection<OrderJob> OrderJobs { get; set; } = new List<OrderJob>();
+      //  public ICollection<OrderJob> OrderJobs { get; set; } = new List<OrderJob>();
         public ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
+        public ICollection<Document> Documents { get; set; } = new List<Document>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
