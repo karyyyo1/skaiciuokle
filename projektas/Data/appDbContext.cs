@@ -77,24 +77,29 @@ namespace projektas.Data
                 .WithMany()
                 .HasForeignKey(op => op.ProductId);
 
-            modelBuilder.Entity<Document>()
-                .ToTable("documents")
-                .HasOne(d => d.Order)
-                .WithMany(o => o.Documents) // make sure Order entity has ICollection<Document> Documents { get; set; }
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Document>().ToTable("documents")
+            .HasOne(d => d.Order)
+            .WithMany(o => o.Documents)
+            .HasForeignKey(d => d.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
 
             // --- Comments ---
             modelBuilder.Entity<Comment>()
                 .ToTable("comments")
                 .HasOne(c => c.Order)
-                .WithMany(o => o.Comments) // make sure Order entity has ICollection<Comment> Comments { get; set; }
+                .WithMany(o => o.Comments)
                 .HasForeignKey(c => c.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Document)
+                .WithMany(d => d.DocumentComment)
+                .HasForeignKey(c => c.DocumentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Comment>()
                 .HasOne(c => c.User)
-                .WithMany() // if you want back-reference, change to .WithMany(u => u.Comments)
+                .WithMany()
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

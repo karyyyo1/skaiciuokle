@@ -3,8 +3,8 @@
     public class DocumentDto
     {
         public ulong OrderId { get; set; }
-        public string Name { get; set; }
-        public string FilePath { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string FilePath { get; set; } = string.Empty;
     }
     public class DocumentResponseDto
     {

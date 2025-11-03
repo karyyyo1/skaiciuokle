@@ -33,105 +33,145 @@ namespace projektas.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] ProductDto dto)
         {
-            Product product = dto.Type switch
-            {
-                ProductType.fence => new Fence
-                {
-                    Name = dto.Name,
-                    Description = dto.Description,
-                    Price = dto.Price,
-                    Width = dto.Width,
-                    Height = dto.Height,
-                    Length = dto.Length,
-                    Quantity = dto.Quantity,
-                    Color = dto.Color,
-                    FillType = (FenceType?)dto.FillType
-                },
-                ProductType.gate_engine => new GateEngine
-                {
-                    Name = dto.Name,
-                    Description = dto.Description,
-                    Price = dto.Price,
-                    GateType = (GateType?)dto.GateType,
-                    Fast = dto.Fast
-                },
-                ProductType.access_control => new AccessControl
-                {
-                    Name = dto.Name,
-                    Description = dto.Description,
-                    Price = dto.Price,
-                    Connection = dto.Connection,
-                    Relays = dto.Relays
-                },
-                ProductType.jobs => new Jobs
-                {
-                    Name = dto.Name,
-                    Description = dto.Description,
-                    Price = dto.Price
-                },
-                _ => throw new NotSupportedException($"Unsupported product type: {dto.Type}")
-            };
+            // ✅ Validate DTO
+            if (dto == null)
+                return BadRequest("Product data is required.");
 
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return Ok(product);
+            if (dto.Price <= 0)
+                return BadRequest("Price must be greater than zero.");
+
+            if (dto.Quantity < 0)
+                return BadRequest("Quantity cannot be negative.");
+
+            try
+            {
+                Product product = dto.Type switch
+                {
+                    ProductType.fence => new Fence
+                    {
+                        Name = dto.Name,
+                        Description = dto.Description,
+                        Price = dto.Price,
+                        Width = dto.Width,
+                        Height = dto.Height,
+                        Length = dto.Length,
+                        Quantity = dto.Quantity,
+                        Color = dto.Color,
+                        FillType = (FenceType?)dto.FillType
+                    },
+                    ProductType.gate_engine => new GateEngine
+                    {
+                        Name = dto.Name,
+                        Description = dto.Description,
+                        Price = dto.Price,
+                        GateType = (GateType?)dto.GateType,
+                        Fast = dto.Fast
+                    },
+                    ProductType.access_control => new AccessControl
+                    {
+                        Name = dto.Name,
+                        Description = dto.Description,
+                        Price = dto.Price,
+                        Connection = dto.Connection,
+                        Relays = dto.Relays
+                    },
+                    ProductType.jobs => new Jobs
+                    {
+                        Name = dto.Name,
+                        Description = dto.Description,
+                        Price = dto.Price
+                    },
+                    _ => throw new NotSupportedException($"Unsupported product type: {dto.Type}")
+                };
+
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+            }
+            catch (NotSupportedException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, $"Database error: {ex.InnerException?.Message ?? ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Unexpected error: {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(ulong id, [FromBody] ProductDto dto)
         {
+            if (dto == null)
+                return BadRequest("Product data is required.");
+
+            if (dto.Price <= 0)
+                return BadRequest("Price must be greater than zero.");
+
+            if (dto.Quantity < 0)
+                return BadRequest("Quantity cannot be negative.");
 
             var existing = await _context.Products.FindAsync(id);
             if (existing == null) return NotFound();
 
-            // Update base fields
-            existing.Name = dto.Name;
-            existing.Description = dto.Description;
-            existing.Price = dto.Price;
-            existing.Width = dto.Width;
-            existing.Length = dto.Length;
-            existing.Height = dto.Height;
-            existing.Color = dto.Color;
-            existing.Quantity = dto.Quantity;
-
-            // Type-specific updates
-            switch (dto.Type)
+            try
             {
-                case ProductType.fence:
-                    if (existing is Fence fence)
-                        fence.FillType = (FenceType?)dto.FillType;
-                    break;
+                // Update base fields
+                existing.Name = dto.Name;
+                existing.Description = dto.Description;
+                existing.Price = dto.Price;
+                existing.Width = dto.Width;
+                existing.Length = dto.Length;
+                existing.Height = dto.Height;
+                existing.Color = dto.Color;
+                existing.Quantity = dto.Quantity;
 
-                case ProductType.gate_engine:
-                    if (existing is GateEngine engine)
-                    {
-                        engine.GateType = (GateType?)dto.GateType;
-                        engine.Fast = dto.Fast;
-                    }
-                    break;
+                // Type-specific updates
+                switch (dto.Type)
+                {
+                    case ProductType.fence:
+                        if (existing is Fence fence)
+                            fence.FillType = (FenceType?)dto.FillType;
+                        break;
 
-                case ProductType.access_control:
-                    if (existing is AccessControl access)
-                    {
-                        access.Connection = dto.Connection;
-                        access.Relays = dto.Relays;
-                    }
-                    break;
+                    case ProductType.gate_engine:
+                        if (existing is GateEngine engine)
+                        {
+                            engine.GateType = (GateType?)dto.GateType;
+                            engine.Fast = dto.Fast;
+                        }
+                        break;
 
-                case ProductType.gate:
-                    if (existing is Gate gate)
-                        gate.GateType = (GateType?)dto.GateType;
-                    break;
+                    case ProductType.access_control:
+                        if (existing is AccessControl access)
+                        {
+                            access.Connection = dto.Connection;
+                            access.Relays = dto.Relays;
+                        }
+                        break;
 
-                // Poles or Gadgets might have shared props
-                default:
-                    break;
+                    case ProductType.gate:
+                        if (existing is Gate gate)
+                            gate.GateType = (GateType?)dto.GateType;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                _context.Entry(existing).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-
-            _context.Entry(existing).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error updating product: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]

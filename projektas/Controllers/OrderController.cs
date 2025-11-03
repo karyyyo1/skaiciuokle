@@ -75,8 +75,15 @@ namespace projektas.Controllers
             if (orderDto == null)
                 return BadRequest("Order data is required.");
 
-            if (orderDto.ClientId == 0)
-                return BadRequest("ClientId is required.");
+            //  Business validations
+            if (orderDto.ClientId <= 0)
+                return BadRequest("ClientId must be greater than zero.");
+
+            if (orderDto.ManagerId <= 0)
+                return BadRequest("ManagerId must be greater than zero.");
+
+            if (orderDto.TotalPrice <= 0)
+                return BadRequest("TotalPrice must be greater than zero.");
 
             if (orderDto.OrderProducts == null || !orderDto.OrderProducts.Any())
                 return BadRequest("At least one product is required in the order.");
@@ -100,9 +107,8 @@ namespace projektas.Controllers
             };
 
             _context.Orders.Add(order);
-            await _context.SaveChangesAsync(); // order.Id is now generated
-
-            // Map saved entity to response DTO
+            await _context.SaveChangesAsync(); // order.Id generated
+            // Map to response DTO
             var responseDto = new OrderResponseDto
             {
                 Id = order.Id,
@@ -118,25 +124,30 @@ namespace projektas.Controllers
                     })
                     .ToList()
             };
-
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, responseDto);
         }
 
-
-        // PUT: api/orders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(ulong id, [FromBody] OrderDto? orderDto)
         {
             if (orderDto == null)
                 return BadRequest("Order data is required.");
 
+            // Business validations
+            if (orderDto.ManagerId <= 0)
+                return BadRequest("ManagerId must be greater than zero.");
+
+            if (orderDto.TotalPrice <= 0)
+                return BadRequest("TotalPrice must be greater than zero.");
+
             var existingOrder = await _context.Orders
                 .Include(o => o.OrderProducts)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
-            if (existingOrder == null) return NotFound();
+            if (existingOrder == null)
+                return NotFound();
 
-            // Update main fields
+            // Update fields
             existingOrder.ManagerId = orderDto.ManagerId;
             existingOrder.Status = orderDto.Status;
             existingOrder.TotalPrice = orderDto.TotalPrice;

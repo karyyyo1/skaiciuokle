@@ -39,15 +39,9 @@ namespace projektas.Data.entities
         public DateTime? UpdatedAt { get; set; }
 
         // --- Navigation Properties ---
-
-        // Foreign Key to users (assuming a User entity exists)
-        [ForeignKey(nameof(UserId))]
-        public User? User { get; set; }
-
-        public Document Document { get; set; } = null!;
-
-        // Foreign Key to documents.
-        public Order Order { get; set; } = null!;
+        public Order? Order { get; set; }
+        public Document? Document { get; set; }
+        public User User { get; set; } = null!;
     }
 
 }

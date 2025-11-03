@@ -36,5 +36,6 @@ namespace projektas.Data.entities
         [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
         public Order Order { get; set; } = null!;
+        public ICollection<Comment> DocumentComment { get; set; } = new List<Comment>();
     }
 }
