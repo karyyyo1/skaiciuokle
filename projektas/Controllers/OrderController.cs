@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using projektas.Data;
 using projektas.Data.dto;
@@ -45,6 +45,23 @@ namespace projektas.Controllers
 
             var orderDto = MapToResponseDto(order);
             return Ok(orderDto);
+        }
+
+        // GET: api/orders/comments/by-document/{documentId}
+        [HttpGet("comments/by-document/{documentId}")]
+        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByDocument(ulong documentId)
+        {
+            var documentExists = await _context.Documents.AnyAsync(d => d.Id == documentId);
+            if (!documentExists) return NotFound("Document not found");
+
+            var comments = await _context.Comments
+                .Where(c => c.DocumentId == documentId)
+                .Include(c => c.User)
+                .Include(c => c.Document)
+                .OrderByDescending(c => c.CreatedAt)
+                .ToListAsync();
+
+            return Ok(comments);
         }
         private OrderResponseDto MapToResponseDto(Order order)
         {

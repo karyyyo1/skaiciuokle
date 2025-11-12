@@ -1,4 +1,4 @@
-﻿namespace projektas.Data.dto
+namespace projektas.Data.dto
 {
     public class DocumentDto
     {
@@ -14,6 +14,5 @@
         public string FilePath { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public List<DocumentDto> DocumentDtos { get; set; } = new();
     }
 }

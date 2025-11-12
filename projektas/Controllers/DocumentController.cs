@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using projektas.Data;
 using projektas.Data.dto;
@@ -45,6 +45,11 @@ namespace projektas.Controllers
 
             if (documentDto.OrderId == 0)
                 return BadRequest("OrderId is required.");
+
+            // Ensure the referenced Order exists to avoid FK constraint errors
+            var orderExists = await _context.Orders.AnyAsync(o => o.Id == documentDto.OrderId);
+            if (!orderExists)
+                return BadRequest("OrderId does not exist.");
 
             if (string.IsNullOrWhiteSpace(documentDto.Name))
                 return BadRequest("Document name is required.");
@@ -93,6 +98,11 @@ namespace projektas.Controllers
             // Validate fields if needed
             if (documentDto.OrderId == 0)
                 return BadRequest("OrderId is required.");
+
+            // Ensure the referenced Order exists to avoid FK constraint errors
+            var orderExists = await _context.Orders.AnyAsync(o => o.Id == documentDto.OrderId);
+            if (!orderExists)
+                return BadRequest("OrderId does not exist.");
 
             if (string.IsNullOrWhiteSpace(documentDto.Name))
                 return BadRequest("Document name is required.");

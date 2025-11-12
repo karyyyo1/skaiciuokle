@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Document API</title>
+</head>
+<body>
+    <h1>Test Document POST</h1>
+    <button onclick="testPost()">Test POST to /api/Documents</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testPost() {
+            const url = 'http://localhost:5000/api/Documents'; // UPDATE PORT IF NEEDED
+            const data = {
+                OrderId: 1,
+                Name: "Test Document",
+                FilePath: "/test/path.pdf"
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.text();
+                document.getElementById('result').textContent = 
+                    `Status: ${response.status}\n` +
+                    `Response: ${result}`;
+            } catch (error) {
+                document.getElementById('result').textContent = 
+                    `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

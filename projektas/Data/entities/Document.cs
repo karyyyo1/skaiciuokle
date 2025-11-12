@@ -24,7 +24,7 @@ namespace projektas.Data.entities
 
         // file_path VARCHAR(500) NOT NULL
         [Required]
-        [Column("file_path")]
+        [Column("filepath")]
         [StringLength(500)]
         public string FilePath { get; set; }
 

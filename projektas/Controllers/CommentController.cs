@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using projektas.Data;
 using projektas.Data.entities;
+using projektas.Data.dto;
 
 namespace projektas.Controllers
 {
@@ -40,11 +41,45 @@ namespace projektas.Controllers
             if (comment == null) return NotFound();
             return Ok(comment);
         }
+
         // POST: api/comments
         [HttpPost]
-        public async Task<ActionResult<Comment>> CreateComment([FromBody] Comment comment)
+        public async Task<ActionResult<Comment>> CreateComment([FromBody] CommentDto dto)
         {
-            if (comment == null) return BadRequest();
+            if (dto == null) return BadRequest();
+
+            if (string.IsNullOrWhiteSpace(dto.Text)) return BadRequest("Text is required");
+
+            // Exactly one parent: Order OR Document must be set
+            var hasOrder = dto.OrderId.HasValue;
+            var hasDocument = dto.DocumentId.HasValue;
+            if (hasOrder == hasDocument) // both true or both false
+                return BadRequest("Provide exactly one parent: either OrderId or DocumentId");
+
+            var userExists = await _context.Users.AnyAsync(u => u.Id == dto.UserId);
+            if (!userExists) return BadRequest("UserId does not exist");
+
+            if (hasOrder)
+            {
+                var orderExists = await _context.Orders.AnyAsync(o => o.Id == dto.OrderId!.Value);
+                if (!orderExists) return BadRequest("OrderId does not exist");
+            }
+
+            if (hasDocument)
+            {
+                var docExists = await _context.Documents.AnyAsync(d => d.Id == dto.DocumentId!.Value);
+                if (!docExists) return BadRequest("DocumentId does not exist");
+            }
+
+            var comment = new Comment
+            {
+                UserId = dto.UserId,
+                OrderId = dto.OrderId,
+                DocumentId = dto.DocumentId,
+                Text = dto.Text,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
 
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
@@ -54,18 +89,42 @@ namespace projektas.Controllers
 
         // PUT: api/comments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateComment(ulong id, [FromBody] Comment comment)
+        public async Task<IActionResult> UpdateComment(ulong id, [FromBody] CommentDto dto)
         {
-            if (id != comment.Id) return BadRequest("ID mismatch");
+            if (dto == null) return BadRequest();
 
             var existingComment = await _context.Comments.FindAsync(id);
             if (existingComment == null) return NotFound();
 
+            if (string.IsNullOrWhiteSpace(dto.Text)) return BadRequest("Text is required");
+
+            // Exactly one parent: Order OR Document must be set
+            var hasOrder = dto.OrderId.HasValue;
+            var hasDocument = dto.DocumentId.HasValue;
+            if (hasOrder == hasDocument) // both true or both false
+                return BadRequest("Provide exactly one parent: either OrderId or DocumentId");
+
+            var userExists = await _context.Users.AnyAsync(u => u.Id == dto.UserId);
+            if (!userExists) return BadRequest("UserId does not exist");
+
+            if (hasOrder)
+            {
+                var orderExists = await _context.Orders.AnyAsync(o => o.Id == dto.OrderId!.Value);
+                if (!orderExists) return BadRequest("OrderId does not exist");
+            }
+
+            if (hasDocument)
+            {
+                var docExists = await _context.Documents.AnyAsync(d => d.Id == dto.DocumentId!.Value);
+                if (!docExists) return BadRequest("DocumentId does not exist");
+            }
+
             // Update fields
-            existingComment.Text = comment.Text;
-            existingComment.UserId = comment.UserId;
-            existingComment.OrderId = comment.OrderId;
-            existingComment.DocumentId = comment.DocumentId;
+            existingComment.Text = dto.Text;
+            existingComment.UserId = dto.UserId;
+            existingComment.OrderId = dto.OrderId;
+            existingComment.DocumentId = dto.DocumentId;
+            existingComment.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(existingComment).State = EntityState.Modified;
             await _context.SaveChangesAsync();
