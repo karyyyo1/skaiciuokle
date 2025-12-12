@@ -56,12 +56,12 @@ builder.Services.AddAuthentication(options =>
     {
         OnAuthenticationFailed = context =>
         {
-            Console.WriteLine($"❌ JWT Authentication Failed: {context.Exception.Message}");
+            Console.WriteLine($" JWT Authentication Failed: {context.Exception.Message}");
             return Task.CompletedTask;
         },
         OnTokenValidated = context =>
         {
-            Console.WriteLine("✅ JWT Token Validated Successfully");
+            Console.WriteLine(" JWT Token Validated Successfully");
             Console.WriteLine("Claims in token:");
             foreach (var claim in context.Principal.Claims)
             {

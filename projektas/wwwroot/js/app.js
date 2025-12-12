@@ -7,6 +7,43 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+// Globally exposed delete helpers for order items (used by inline onclick)
+async function deleteOrderProduct(orderId, productId) {
+    try {
+        if (!orderId || !productId) return;
+        if (!confirm('Remove this product from the order?')) return;
+        await api.delete(`/api/orders/${orderId}/products/${productId}`);
+        // Immediately refresh the order modal and the orders table
+        await viewOrder(orderId);
+        if (typeof loadOrders === 'function') {
+            await loadOrders();
+        }
+    } catch (err) {
+        console.error('Failed to delete order product', err);
+        showToast('Error removing product: ' + err.message, 'error');
+    }
+}
+
+async function deleteOrderJob(orderId, jobId) {
+    try {
+        if (!orderId || !jobId) return;
+        if (!confirm('Remove this job from the order?')) return;
+        await api.delete(`/api/orders/${orderId}/jobs/${jobId}`);
+        // Immediately refresh the order modal and the orders table
+        await viewOrder(orderId);
+        if (typeof loadOrders === 'function') {
+            await loadOrders();
+        }
+    } catch (err) {
+        console.error('Failed to delete order job', err);
+        showToast('Error removing job: ' + err.message, 'error');
+    }
+}
+
+// Ensure availability for inline handlers
+window.deleteOrderProduct = deleteOrderProduct;
+window.deleteOrderJob = deleteOrderJob;
+
     // Initialize app
     initializeApp();
 });
@@ -1149,6 +1186,7 @@ async function viewOrder(id) {
                                     <th>Image</th>
                                     <th>Name</th>
                                     <th>Quantity</th>
+                                    <th>Done</th>
                                     <th>Price</th>
                                 </tr>
                             </thead>
@@ -1157,14 +1195,16 @@ async function viewOrder(id) {
                                     const product = allProducts.find(p => (p.Id || p.id) === (op.ProductId || op.productId));
                                     const productName = product ? (product.Name || product.name) : 'Unknown Product';
                                     const productImage = product ? (product.Image || product.image) : null;
-                                    const productQuantity = product ? (product.quantity || product.quantity) : 0;
+                                    const productQuantity = op.Quantity || op.quantity || 1;
                                     const productPrice = product ? (product.Price || product.price) : 0;
+                                    const productDone = (op.Done ?? op.done) ? true : false;
                                    
                                     return `
                                     <tr>
                                         <td>${productImage ? `<img src="${escapeHtml(productImage)}" alt="${escapeHtml(productName)}" style="width: 50px; height: 50px; object-fit: cover;">` : '<span style="color: #999;">No image</span>'}</td>
                                         <td>${escapeHtml(productName)}</td>
-                                        <td>Qty: ${op.Quantity || op.quantity}</td>
+                                        <td>Qty: ${productQuantity}</td>
+                                        <td>${productDone ? '✓ Done' : '<span style="color:#999;">–</span>'}</td>
                                         <td>${formatCurrency(productPrice)}</td>
                                     </tr>
                                     `;
@@ -1173,11 +1213,13 @@ async function viewOrder(id) {
                                     const job = allJobs.find(j => (j.Id || j.id) === (oj.JobId || oj.jobId));
                                     const jobName = job ? (job.Name || job.name) : 'Unknown Job';
                                     const jobPrice = oj.Price || oj.price || 0;
+                                    const jobDone = (oj.Done ?? oj.done) ? true : false;
                                     return `
                                     <tr>
                                         <td><span style="color: #999;">-</span></td>
                                         <td>${escapeHtml(jobName)}</td>
                                         <td>-</td>
+                                        <td>${jobDone ? '✓ Done' : '<span style="color:#999;">–</span>'}</td>
                                         <td>${formatCurrency(jobPrice)}</td>
                                     </tr>
                                     `;

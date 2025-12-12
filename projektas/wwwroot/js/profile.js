@@ -83,7 +83,6 @@ async function updateUsername() {
         showToast('Username must be at least 3 characters', 'error');
         return;
     }
-
     try {
         const user = getCurrentUser();
         
@@ -91,17 +90,14 @@ async function updateUsername() {
             showToast('User not logged in', 'error');
             return;
         }
-        
         console.log('Updating username for user ID:', user.id);
         
         const response = await api.put(`/api/users/${user.id}`, {
             Username: newUsername
         });
-
         // Update local storage
         user.username = newUsername;
         localStorage.setItem('user', JSON.stringify(user));
-
         // Update display
         document.getElementById('profileUsername').textContent = newUsername;
         document.getElementById('newUsername').value = '';

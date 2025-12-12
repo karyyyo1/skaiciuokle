@@ -343,12 +343,46 @@ function updateSummary() {
                 </div>
                 <div style="text-align: right;">
                     ${formatCurrency(subtotal)}
+                    <button class="btn btn-sm btn-danger" style="margin-left:8px;" title="Remove"
+                        onclick="removeSelectedItem(${item.id}, '${item.type}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             </div>
         `;
     }).join('');
     
     totalPriceElement.textContent = formatCurrency(total);
+}
+
+// Remove item from the order (for edit mode) or from the current selection (for create mode)
+async function removeSelectedItem(itemId, type) {
+    try {
+        // If editing an existing order, call backend to delete immediately
+        if (typeof editingOrderId !== 'undefined' && editingOrderId) {
+            if (type === 'product') {
+                await api.delete(`/api/orders/${editingOrderId}/products/${itemId}`);
+            } else {
+                await api.delete(`/api/orders/${editingOrderId}/jobs/${itemId}`);
+            }
+            // Reload order to reflect changes
+            await loadExistingOrder(editingOrderId);
+            showToast('Item removed', 'success');
+            return;
+        }
+
+        // Otherwise, remove from local selection
+        const idx = selectedItems.findIndex(i => i.id === itemId && i.type === type);
+        if (idx >= 0) {
+            selectedItems.splice(idx, 1);
+            renderProductsCatalog();
+            renderJobsCatalog();
+            updateSummary();
+        }
+    } catch (err) {
+        console.error('Failed to remove item', err);
+        showToast('Error removing item: ' + err.message, 'error');
+    }
 }
 
 // Add comment
@@ -369,20 +403,47 @@ function renderComments() {
         return;
     }
     
-    container.innerHTML = comments.map((comment, index) => `
+    container.innerHTML = comments.map((comment, index) => {
+        const hasId = !!comment.id;
+        const onclick = hasId
+            ? `deleteOrderComment(${comment.id})`
+            : `removeComment(${index})`;
+        return `
         <div class="comment-item">
-            <button class="remove-btn" onclick="removeComment(${index})">
+            <button class="remove-btn" onclick="${onclick}">
                 <i class="fas fa-times"></i>
             </button>
             <p>${escapeHtml(comment.text)}</p>
         </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Remove comment
 function removeComment(index) {
     comments.splice(index, 1);
     renderComments();
+}
+
+// Delete an existing comment from backend (edit mode)
+async function deleteOrderComment(commentId) {
+    if (!commentId) return;
+    if (!confirm('Delete this comment?')) return;
+    try {
+        await api.deleteComment(commentId);
+        // Reload order to refresh comments list if editing
+        if (typeof editingOrderId !== 'undefined' && editingOrderId) {
+            await loadExistingOrder(editingOrderId);
+        } else {
+            // Fallback: update local list
+            comments = comments.filter(c => c.id !== commentId);
+            renderComments();
+        }
+        showToast('Comment deleted', 'success');
+    } catch (err) {
+        console.error('Failed to delete comment', err);
+        showToast('Error deleting comment: ' + err.message, 'error');
+    }
 }
 
 // Add document
@@ -428,6 +489,11 @@ async function loadExistingOrder(orderId) {
     try {
         const order = await api.getOrder(orderId);
         
+        // Reset current in-memory selections to avoid duplicates
+        selectedItems = [];
+        comments = [];
+        documents = [];
+
         // Set form values
         document.getElementById('userSelect').value = order.UserId || order.userId;
         document.getElementById('managerSelect').value = order.ManagerId || order.managerId;
@@ -439,10 +505,10 @@ async function loadExistingOrder(orderId) {
             const productId = op.ProductId || op.productId;
             const quantity = op.Quantity || op.quantity || 1;
             const done = op.Done || op.done || false;
-            
-            const allItems = [...allProducts, ...allJobs];
-            const item = allItems.find(p => (p.Id || p.id) === productId);
-            
+
+            // Look up only in products list
+            const item = allProducts.find(p => (p.Id || p.id) === productId);
+
             if (item) {
                 selectedItems.push({
                     id: productId,
@@ -450,7 +516,29 @@ async function loadExistingOrder(orderId) {
                     price: item.Price || item.price,
                     quantity: quantity,
                     done: done,
-                    type: (item.Type || item.type) === 7 ? 'job' : 'product'
+                    type: 'product'
+                });
+            }
+        });
+
+        // Load order jobs
+        const orderJobs = order.OrderJobs || order.orderJobs || [];
+        orderJobs.forEach(oj => {
+            const jobId = oj.JobId || oj.jobId;
+            // Backend has no Quantity for jobs; default to 1
+            const quantity = oj.Quantity || oj.quantity || 1;
+            const done = oj.Done || oj.done || false;
+            const price = oj.Price || oj.price || 0;
+
+            const job = allJobs.find(j => (j.Id || j.id) === jobId);
+            if (job) {
+                selectedItems.push({
+                    id: jobId,
+                    name: job.Name || job.name,
+                    price: price, // use stored price on the order job
+                    quantity: quantity,
+                    done: done,
+                    type: 'job'
                 });
             }
         });

@@ -354,5 +354,35 @@ namespace projektas.Controllers
 
             return NoContent();
         }
+
+        // DELETE: api/orders/{orderId}/products/{productId}
+        [HttpDelete("{orderId}/products/{productId}")]
+        [Authorize(Roles = "admin,manager")]
+        public async Task<IActionResult> DeleteOrderProduct(ulong orderId, ulong productId)
+        {
+            var existing = await _context.OrderProducts
+                .FirstOrDefaultAsync(op => op.OrderId == orderId && op.ProductId == productId);
+            if (existing == null)
+                return NotFound();
+
+            _context.OrderProducts.Remove(existing);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // DELETE: api/orders/{orderId}/jobs/{jobId}
+        [HttpDelete("{orderId}/jobs/{jobId}")]
+        [Authorize(Roles = "admin,manager")]
+        public async Task<IActionResult> DeleteOrderJob(ulong orderId, ulong jobId)
+        {
+            var existing = await _context.OrderJobs
+                .FirstOrDefaultAsync(oj => oj.OrderId == orderId && oj.JobId == jobId);
+            if (existing == null)
+                return NotFound();
+
+            _context.OrderJobs.Remove(existing);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }
