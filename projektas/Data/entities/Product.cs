@@ -13,8 +13,7 @@ namespace projektas.Data.entities
         poles = 3,
         fence = 4,
         gate = 5,
-        gadgets = 6,
-        jobs = 7
+        gadgets = 6
     }
 
     public enum GateType
@@ -56,15 +55,8 @@ namespace projektas.Data.entities
         public ProductType Type { get; protected set; } // enum('...') NOT NULL
 
         // --- Common/Nullable Properties for the TPH table ---
-
-        [Column("width")]
-        public int? Width { get; set; } // int(11) DEFAULT NULL
-
-        [Column("length")]
-        public int? Length { get; set; } // int(11) DEFAULT NULL
-
-        [Column("height")]
-        public int? Height { get; set; } // int(11) DEFAULT NULL
+        [Column("image")]
+        public string? Image { get; set; } // varchar(300) DEFAULT NULL
 
         [Column("connection")]
         public string? Connection { get; set; } // varchar(255) DEFAULT NULL
@@ -78,19 +70,17 @@ namespace projektas.Data.entities
         [Column("color")]
         public string? Color { get; set; } // varchar(100) DEFAULT NULL
     }
-    public class Jobs : Product
-    {
-        public Jobs() => Type = ProductType.jobs;
-    }
 
     public class AccessControl : Product
     {
         public AccessControl() => Type = ProductType.access_control;
+        // Relays and Connection are inherited from base Product class
     }
 
     public class GateEngine : Product
     {
         public GateEngine() => Type = ProductType.gate_engine;
+        
 
         [Column("gatetype")]
         public GateType? GateType { get; set; } // Mapped from your 'gatetype'
@@ -102,6 +92,15 @@ namespace projektas.Data.entities
     public class Pole : Product
     {
         public Pole() => Type = ProductType.poles;
+          
+        [Column("width")]
+        public int? Width { get; set; } // int(11) DEFAULT NULL
+
+        [Column("length")]
+        public int? Length { get; set; } // int(11) DEFAULT NULL
+
+        [Column("height")]
+        public int? Height { get; set; } // int(11) DEFAULT NULL
     }
 
     public class Gate : Product
@@ -112,17 +111,17 @@ namespace projektas.Data.entities
 
         [Column("gatetype")]
         public GateType? GateType { get; set; } // Mapped from your 'gatetype'
+        
+        [Column("width")]
+        public int? Width { get; set; } // int(11) DEFAULT NULL
+        [Column("height")]
+        public int? Height { get; set; } // int(11) DEFAULT NULL
     }
 
     public class Gadget : Product
     {
         public Gadget() => Type = ProductType.gadgets;
-
-        [Column("connection")]
-        public string? Connection { get; set; } // Mapped from your 'connection'
-
-        [Column("relays")]
-        public int? Relays { get; set; } // Mapped from your 'relays'
+        // Connection and Relays are inherited from base Product class
     }
 
     public class Fence : Product

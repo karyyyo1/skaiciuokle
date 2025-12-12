@@ -10,8 +10,10 @@ namespace projektas.Data
         {
         }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Job> Jobs { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<OrderJob> OrderJobs { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Document> Documents { get; set; }
@@ -47,16 +49,16 @@ namespace projektas.Data
             {
                 entity.Property(f => f.FillType).HasColumnName("filltype");
             });
-/*
-            modelBuilder.Entity<Job>().ToTable("jobs");*/
+
+            modelBuilder.Entity<Job>().ToTable("jobs");
             modelBuilder.Entity<Order>().ToTable("orders");
-/*
+
             modelBuilder.Entity<OrderJob>()
-               .HasKey(oj => new { oj.OrderId, oj.JobId });*/
+               .HasKey(oj => new { oj.OrderId, oj.JobId });
 
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.OrderId, op.ProductId });
-/*
+
             modelBuilder.Entity<OrderJob>()
               .HasOne(oj => oj.Order)
               .WithMany(o => o.OrderJobs)
@@ -65,7 +67,7 @@ namespace projektas.Data
             modelBuilder.Entity<OrderJob>()
                 .HasOne(oj => oj.Job)
                 .WithMany()
-                .HasForeignKey(oj => oj.JobId);*/
+                .HasForeignKey(oj => oj.JobId);
 
             modelBuilder.Entity<OrderProduct>()
                 .HasOne(op => op.Order)

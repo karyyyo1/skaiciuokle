@@ -20,8 +20,8 @@ namespace projektas.Data.entities
         public ulong Id { get; set; } // bigint(20) UNSIGNED → ulong
 
         [Required]
-        [Column("client_id")]
-        public ulong ClientId { get; set; }
+        [Column("user_id")]
+        public ulong UserId { get; set; }
 
         [Column("manager_id")]
         public ulong? ManagerId { get; set; }
@@ -39,7 +39,7 @@ namespace projektas.Data.entities
 
         [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
-      //  public ICollection<OrderJob> OrderJobs { get; set; } = new List<OrderJob>();
+        public ICollection<OrderJob> OrderJobs { get; set; } = new List<OrderJob>();
         public ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
         public ICollection<Document> Documents { get; set; } = new List<Document>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();

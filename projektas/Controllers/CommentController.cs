@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using projektas.Data;
@@ -8,6 +9,7 @@ namespace projektas.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CommentsController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -21,11 +23,24 @@ namespace projektas.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
         {
-            return await _context.Comments
+            var comments = await _context.Comments
                 .Include(c => c.User)
-                .Include(c => c.Order)
-                .Include(c => c.Document)
                 .ToListAsync();
+
+            // Create response with user email
+            var response = comments.Select(c => new
+            {
+                c.Id,
+                c.UserId,
+                User = c.User != null ? new { c.User.Email, c.User.Username } : null,
+                c.OrderId,
+                c.DocumentId,
+                c.Text,
+                c.CreatedAt,
+                c.UpdatedAt
+            });
+
+            return Ok(response);
         }
 
         // GET: api/comments/5
@@ -134,6 +149,7 @@ namespace projektas.Controllers
 
         // DELETE: api/comments/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin,manager")]
         public async Task<IActionResult> DeleteComment(ulong id)
         {
             var comment = await _context.Comments.FindAsync(id);

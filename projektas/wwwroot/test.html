@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .result {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        .error {
+            border-left-color: #f44336;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #5a67d8;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 JWT Token Diagnostic Test</h1>
+    
+    <div class="test-section">
+        <h2>Step 1: Check LocalStorage</h2>
+        <button onclick="checkLocalStorage()">Check LocalStorage</button>
+        <div id="localStorageResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 2: Decode JWT Token</h2>
+        <button onclick="decodeToken()">Decode Token</button>
+        <div id="tokenDecodeResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 3: Test API Call (Public)</h2>
+        <button onclick="testPublicAPI()">Test GET /api/products</button>
+        <div id="publicAPIResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 4: Test API Call (Authenticated)</h2>
+        <button onclick="testAuthAPI()">Test GET /api/orders</button>
+        <div id="authAPIResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Quick Actions</h2>
+        <button onclick="clearStorage()">Clear LocalStorage</button>
+        <button onclick="window.location.href='/register.html'">Go to Register</button>
+        <button onclick="window.location.href='/login.html'">Go to Login</button>
+        <button onclick="window.location.href='/index.html'">Go to Dashboard</button>
+    </div>
+
+    <script>
+        function checkLocalStorage() {
+            const result = document.getElementById('localStorageResult');
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            let html = '<div class="result">';
+            
+            if (token) {
+                html += '<p>✅ <strong>Token exists</strong></p>';
+                html += `<p>Token (first 50 chars): <code>${token.substring(0, 50)}...</code></p>`;
+                html += `<p>Token length: ${token.length} characters</p>`;
+            } else {
+                html += '<p class="error">❌ <strong>No token found</strong></p>';
+                html += '<p>You need to login first!</p>';
+            }
+            
+            if (user) {
+                html += '<p>✅ <strong>User data exists</strong></p>';
+                html += '<pre>' + JSON.stringify(JSON.parse(user), null, 2) + '</pre>';
+            } else {
+                html += '<p class="error">❌ <strong>No user data found</strong></p>';
+            }
+            
+            html += '</div>';
+            result.innerHTML = html;
+        }
+
+        function decodeToken() {
+            const result = document.getElementById('tokenDecodeResult');
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                result.innerHTML = '<div class="result error">❌ No token to decode. Login first!</div>';
+                return;
+            }
+            
+            try {
+                // Decode JWT token
+                const parts = token.split('.');
+                if (parts.length !== 3) {
+                    throw new Error('Invalid JWT format');
+                }
+                
+                const header = JSON.parse(atob(parts[0]));
+                const payload = JSON.parse(atob(parts[1]));
+                
+                const now = Math.floor(Date.now() / 1000);
+                const isExpired = payload.exp < now;
+                const timeLeft = payload.exp - now;
+                
+                let html = '<div class="result">';
+                html += '<h3>Token Header:</h3>';
+                html += '<pre>' + JSON.stringify(header, null, 2) + '</pre>';
+                html += '<h3>Token Payload:</h3>';
+                html += '<pre>' + JSON.stringify(payload, null, 2) + '</pre>';
+                html += '<h3>Token Status:</h3>';
+                
+                if (isExpired) {
+                    html += '<p class="error">❌ <strong>Token is EXPIRED</strong></p>';
+                    html += `<p>Expired ${Math.abs(timeLeft)} seconds ago</p>`;
+                } else {
+                    html += '<p>✅ <strong>Token is VALID</strong></p>';
+                    html += `<p>Expires in ${Math.floor(timeLeft / 60)} minutes</p>`;
+                }
+                
+                html += '</div>';
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Error decoding token: ${error.message}</div>`;
+            }
+        }
+
+        async function testPublicAPI() {
+            const result = document.getElementById('publicAPIResult');
+            result.innerHTML = '<div class="result">⏳ Testing...</div>';
+            
+            try {
+                const response = await fetch('/api/products');
+                const status = response.status;
+                const data = await response.json();
+                
+                let html = '<div class="result">';
+                html += `<p>Status: <strong>${status}</strong></p>`;
+                
+                if (response.ok) {
+                    html += '<p>✅ <strong>Success!</strong></p>';
+                    html += `<p>Found ${data.length} products</p>`;
+                    html += '<pre>' + JSON.stringify(data.slice(0, 2), null, 2) + '</pre>';
+                } else {
+                    html += '<p class="error">❌ <strong>Failed!</strong></p>';
+                    html += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                }
+                
+                html += '</div>';
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testAuthAPI() {
+            const result = document.getElementById('authAPIResult');
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                result.innerHTML = '<div class="result error">❌ No token found. Login first!</div>';
+                return;
+            }
+            
+            result.innerHTML = '<div class="result">⏳ Testing authenticated endpoint...</div>';
+            
+            try {
+                const response = await fetch('/api/orders', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const status = response.status;
+                let html = '<div class="result">';
+                html += `<p>Status: <strong>${status}</strong></p>`;
+                html += `<p>Token sent: <code>${token.substring(0, 30)}...</code></p>`;
+                
+                if (status === 401) {
+                    html += '<p class="error">❌ <strong>401 UNAUTHORIZED</strong></p>';
+                    html += '<p>This is the problem! The token is being rejected by the API.</p>';
+                    html += '<p><strong>Possible causes:</strong></p>';
+                    html += '<ul>';
+                    html += '<li>JWT secret key mismatch</li>';
+                    html += '<li>Token is expired</li>';
+                    html += '<li>Token format is invalid</li>';
+                    html += '<li>JWT configuration issue</li>';
+                    html += '</ul>';
+                } else if (response.ok) {
+                    const data = await response.json();
+                    html += '<p>✅ <strong>Success! Token is valid!</strong></p>';
+                    html += `<p>Found ${data.length} orders</p>`;
+                } else {
+                    const text = await response.text();
+                    html += `<p class="error">❌ Status ${status}</p>`;
+                    html += `<pre>${text}</pre>`;
+                }
+                
+                html += '</div>';
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        function clearStorage() {
+            localStorage.clear();
+            alert('LocalStorage cleared! Now try registering again.');
+            location.reload();
+        }
+
+        // Auto-run checks on load
+        window.addEventListener('DOMContentLoaded', () => {
+            checkLocalStorage();
+        });
+    </script>
+</body>
+</html>

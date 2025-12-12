@@ -17,6 +17,8 @@ namespace projektas.Data.entities
 
         [Column("quantity")]
         public int Quantity { get; set; } = 1;
+        [Column("done")]
+        public bool done { get; set; }
 
         // Navigation properties
         public Order Order { get; set; } = null!;

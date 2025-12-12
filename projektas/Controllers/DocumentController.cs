@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using projektas.Data;
@@ -8,6 +9,7 @@ namespace projektas.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DocumentsController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -122,6 +124,7 @@ namespace projektas.Controllers
         }
         // DELETE: api/documents/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin,manager")]
         public async Task<IActionResult> DeleteDocument(ulong id)
         {
             var document = await _context.Documents.FindAsync(id);

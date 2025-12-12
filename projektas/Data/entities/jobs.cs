@@ -1,4 +1,4 @@
-﻿/*using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,4 +24,4 @@ namespace projektas.Data.entities
         [Precision(10, 2)] // EF Core 6+ attribute for decimal precision
         public decimal Price { get; set; } = 0.00m;
     }
-}*/
+}

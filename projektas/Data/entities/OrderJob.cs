@@ -1,4 +1,4 @@
-﻿/*using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,9 +18,13 @@ namespace projektas.Data.entities
         [Column("price")]
         [Precision(10, 2)]
         public decimal Price { get; set; }
+        
+        [Column("done")]
+        public bool Done { get; set; }
 
         // Navigation properties
         public Order Order { get; set; } = null!;
+        public Job Job { get; set; } = null!;
       
     }
-}*/
+}

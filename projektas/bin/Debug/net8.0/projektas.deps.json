@@ -10,8 +10,10 @@
         "dependencies": {
           "AutoMapper": "15.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.0",
           "Microsoft.Data.SqlClient": "6.1.2",
-          "Pomelo.EntityFrameworkCore.MySql": "9.0.0"
+          "Pomelo.EntityFrameworkCore.MySql": "9.0.0",
+          "System.IdentityModel.Tokens.Jwt": "8.0.0"
         },
         "runtime": {
           "projektas.dll": {}
@@ -66,6 +68,17 @@
           "lib/net8.0/Azure.Identity.dll": {
             "assemblyVersion": "1.14.2.0",
             "fileVersion": "1.1400.225.36004"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "7.7.1"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53112"
           }
         }
       },
@@ -386,7 +399,7 @@
       "Microsoft.IdentityModel.Protocols.OpenIdConnect/7.7.1": {
         "dependencies": {
           "Microsoft.IdentityModel.Protocols": "7.7.1",
-          "System.IdentityModel.Tokens.Jwt": "7.7.1"
+          "System.IdentityModel.Tokens.Jwt": "8.0.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll": {
@@ -486,15 +499,15 @@
           }
         }
       },
-      "System.IdentityModel.Tokens.Jwt/7.7.1": {
+      "System.IdentityModel.Tokens.Jwt/8.0.0": {
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "8.0.1",
           "Microsoft.IdentityModel.Tokens": "8.0.1"
         },
         "runtime": {
           "lib/net8.0/System.IdentityModel.Tokens.Jwt.dll": {
-            "assemblyVersion": "7.7.1.0",
-            "fileVersion": "7.7.1.50719"
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.0.50716"
           }
         }
       },
@@ -574,6 +587,13 @@
       "sha512": "sha512-YhNMwOTwT+I2wIcJKSdP0ADyB2aK+JaYWZxO8LSRDm5w77LFr0ykR9xmt2ZV5T1gaI7xU6iNFIh/yW1dAlpddQ==",
       "path": "azure.identity/1.14.2",
       "hashPath": "azure.identity.1.14.2.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rwxaZYHips5M9vqxRkGfJthTx+Ws4O4yCuefn17J371jL3ouC5Ker43h2hXb5yd9BMnImE9rznT75KJHm6bMgg==",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/8.0.0",
+      "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.8.0.0.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
       "type": "package",
@@ -799,12 +819,12 @@
       "path": "system.diagnostics.eventlog/8.0.1",
       "hashPath": "system.diagnostics.eventlog.8.0.1.nupkg.sha512"
     },
-    "System.IdentityModel.Tokens.Jwt/7.7.1": {
+    "System.IdentityModel.Tokens.Jwt/8.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-rQkO1YbAjLwnDJSMpRhRtrc6XwIcEOcUvoEcge+evurpzSZM3UNK+MZfD3sKyTlYsvknZ6eJjSBfnmXqwOsT9Q==",
-      "path": "system.identitymodel.tokens.jwt/7.7.1",
-      "hashPath": "system.identitymodel.tokens.jwt.7.7.1.nupkg.sha512"
+      "sha512": "sha512-K0dNZoXiedkpkz8v8xj3jH5IeSa3iAPNu2OegePynCeG6wiLx7CvBfDa90hYOBJ58Y21tZFd9RLpzfS7rEaHlQ==",
+      "path": "system.identitymodel.tokens.jwt/8.0.0",
+      "hashPath": "system.identitymodel.tokens.jwt.8.0.0.nupkg.sha512"
     },
     "System.Memory/4.5.5": {
       "type": "package",

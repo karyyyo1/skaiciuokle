@@ -9,6 +9,7 @@ namespace projektas.Data.dto
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public ProductType Type { get; set; }
+        public string? Image { get; set; }
         public int? Width { get; set; }
         public int? Length { get; set; }
         public int? Height { get; set; }

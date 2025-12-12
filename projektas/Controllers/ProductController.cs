@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using projektas.Data;
 using projektas.Data.dto;
@@ -31,6 +32,7 @@ namespace projektas.Controllers
             return Ok(product);
         }
         [HttpPost]
+        [Authorize(Roles = "admin,manager")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductDto dto)
         {
             // ✅ Validate DTO
@@ -52,9 +54,7 @@ namespace projektas.Controllers
                         Name = dto.Name,
                         Description = dto.Description,
                         Price = dto.Price,
-                        Width = dto.Width,
-                        Height = dto.Height,
-                        Length = dto.Length,
+                        Image = dto.Image,
                         Quantity = dto.Quantity,
                         Color = dto.Color,
                         FillType = (FenceType?)dto.FillType
@@ -64,6 +64,9 @@ namespace projektas.Controllers
                         Name = dto.Name,
                         Description = dto.Description,
                         Price = dto.Price,
+                        Image = dto.Image,
+                        Quantity = dto.Quantity,
+                        Color = dto.Color,
                         GateType = (GateType?)dto.GateType,
                         Fast = dto.Fast
                     },
@@ -72,14 +75,44 @@ namespace projektas.Controllers
                         Name = dto.Name,
                         Description = dto.Description,
                         Price = dto.Price,
+                        Image = dto.Image,
+                        Quantity = dto.Quantity,
+                        Color = dto.Color,
                         Connection = dto.Connection,
                         Relays = dto.Relays
                     },
-                    ProductType.jobs => new Jobs
+                    ProductType.poles => new Pole
                     {
                         Name = dto.Name,
                         Description = dto.Description,
-                        Price = dto.Price
+                        Price = dto.Price,
+                        Image = dto.Image,
+                        Quantity = dto.Quantity,
+                        Color = dto.Color,
+                        Width = dto.Width,
+                        Length = dto.Length,
+                        Height = dto.Height
+                    },
+                    ProductType.gate => new Gate
+                    {
+                        Name = dto.Name,
+                        Description = dto.Description,
+                        Price = dto.Price,
+                        Image = dto.Image,
+                        Quantity = dto.Quantity,
+                        Color = dto.Color,
+                        GateType = (GateType?)dto.GateType
+                    },
+                    ProductType.gadgets => new Gadget
+                    {
+                        Name = dto.Name,
+                        Description = dto.Description,
+                        Price = dto.Price,
+                        Image = dto.Image,
+                        Quantity = dto.Quantity,
+                        Color = dto.Color,
+                        Connection = dto.Connection,
+                        Relays = dto.Relays
                     },
                     _ => throw new NotSupportedException($"Unsupported product type: {dto.Type}")
                 };
@@ -104,6 +137,7 @@ namespace projektas.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin,manager")]
         public async Task<ActionResult> Update(ulong id, [FromBody] ProductDto dto)
         {
             if (dto == null)
@@ -120,13 +154,11 @@ namespace projektas.Controllers
 
             try
             {
-                // Update base fields
+                // Update base fields (common to all products)
                 existing.Name = dto.Name;
                 existing.Description = dto.Description;
                 existing.Price = dto.Price;
-                existing.Width = dto.Width;
-                existing.Length = dto.Length;
-                existing.Height = dto.Height;
+                existing.Image = dto.Image;
                 existing.Color = dto.Color;
                 existing.Quantity = dto.Quantity;
 
@@ -135,7 +167,9 @@ namespace projektas.Controllers
                 {
                     case ProductType.fence:
                         if (existing is Fence fence)
+                        {
                             fence.FillType = (FenceType?)dto.FillType;
+                        }
                         break;
 
                     case ProductType.gate_engine:
@@ -156,7 +190,28 @@ namespace projektas.Controllers
 
                     case ProductType.gate:
                         if (existing is Gate gate)
+                        {
                             gate.GateType = (GateType?)dto.GateType;
+                            gate.Height = dto.Height;
+                            gate.Width = dto.Width;
+                        }
+                        break;
+
+                    case ProductType.poles:
+                        if (existing is Pole pole)
+                        {
+                            pole.Width = dto.Width;
+                            pole.Length = dto.Length;
+                            pole.Height = dto.Height;
+                        }
+                        break;
+
+                    case ProductType.gadgets:
+                        if (existing is Gadget gadget)
+                        {
+                            gadget.Connection = dto.Connection;
+                            gadget.Relays = dto.Relays;
+                        }
                         break;
 
                     default:
@@ -175,6 +230,7 @@ namespace projektas.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Delete(ulong id)
         {
             var product = await _context.Products.FindAsync(id);

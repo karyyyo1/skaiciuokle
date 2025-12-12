@@ -5,12 +5,56 @@
       "PackagePath": "staticwebassets\\projektas.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\css\\auth.css",
+      "PackagePath": "staticwebassets\\css\\auth.css"
+    },
+    {
       "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\css\\styles.css",
+      "PackagePath": "staticwebassets\\css\\styles.css"
+    },
+    {
       "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\api.js",
+      "PackagePath": "staticwebassets\\js\\api.js"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\app.js",
+      "PackagePath": "staticwebassets\\js\\app.js"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\auth.js",
+      "PackagePath": "staticwebassets\\js\\auth.js"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\login.js",
+      "PackagePath": "staticwebassets\\js\\login.js"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\orders-create.js",
+      "PackagePath": "staticwebassets\\js\\orders-create.js"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\products-manage.js",
+      "PackagePath": "staticwebassets\\js\\products-manage.js"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\profile.js",
+      "PackagePath": "staticwebassets\\js\\profile.js"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\register.js",
+      "PackagePath": "staticwebassets\\js\\register.js"
     },
     {
       "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\js\\site.js",
@@ -243,6 +287,30 @@
     {
       "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\login.html",
+      "PackagePath": "staticwebassets\\login.html"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\orders.html",
+      "PackagePath": "staticwebassets\\orders.html"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\products.html",
+      "PackagePath": "staticwebassets\\products.html"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\profile.html",
+      "PackagePath": "staticwebassets\\profile.html"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\register.html",
+      "PackagePath": "staticwebassets\\register.html"
+    },
+    {
+      "Id": "C:\\Users\\Dell\\Desktop\\unikas\\7_pusm\\Saitynai\\skaiciuokle\\projektas\\wwwroot\\test.html",
+      "PackagePath": "staticwebassets\\test.html"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.projektas.props",

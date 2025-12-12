@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products - Skaičiuoklė</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .products-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .products-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .products-header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-section input,
+        .filter-section select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .filter-section input {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-card .product-type {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .product-card .product-type.job {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .product-card .product-type.product {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .product-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        .product-card .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .product-card .description {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            line-height: 1.5;
+            min-height: 60px;
+        }
+
+        .product-card .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .product-card .details .detail-item {
+            font-size: 0.85rem;
+        }
+
+        .product-card .details .detail-item strong {
+            color: var(--text-color);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .product-card .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .product-card .actions button {
+            flex: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .products-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calculator"></i>
+                    <span>Skaičiuoklė</span>
+                </div>
+                <div class="user-menu">
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="products-container">
+            <div class="products-header">
+                <div>
+                    <h1><i class="fas fa-box"></i> Products & Jobs Management</h1>
+                    <p>Manage your product catalog and job listings</p>
+                </div>
+                <button class="btn btn-primary" onclick="addNewProduct()">
+                    <i class="fas fa-plus"></i> Add Product/Job
+                </button>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
+                <select id="typeFilter" onchange="filterProducts()">
+                    <option value="">All Types</option>
+                    <option value="product">Products Only</option>
+                    <option value="job">Jobs Only</option>
+                </select>
+                <button class="btn btn-secondary" onclick="resetFilters()">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <div class="empty-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading products...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <h2 id="modalTitle">Modal Title</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/products-manage.js"></script>
+</body>
+</html>

@@ -128,3 +128,6 @@ C:\Users\Dell\Desktop\unikas\7_pusm\Saitynai\skaiciuokle\projektas\bin\Debug\net
 C:\Users\Dell\Desktop\unikas\7_pusm\Saitynai\skaiciuokle\projektas\bin\Debug\net8.0\MySqlConnector.dll
 C:\Users\Dell\Desktop\unikas\7_pusm\Saitynai\skaiciuokle\projektas\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\Dell\Desktop\unikas\7_pusm\Saitynai\skaiciuokle\projektas\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Dell\Desktop\unikas\7_pusm\Saitynai\skaiciuokle\projektas\bin\Debug\net8.0\web.config
+C:\Users\Dell\Desktop\unikas\7_pusm\Saitynai\skaiciuokle\projektas\bin\Debug\net8.0\appsettings.Production.json
+C:\Users\Dell\Desktop\unikas\7_pusm\Saitynai\skaiciuokle\projektas\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

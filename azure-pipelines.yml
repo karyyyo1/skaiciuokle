@@ -1,0 +1,75 @@
+# Azure DevOps Pipeline for ASP.NET Core deployment to Windows App Service
+
+trigger:
+- main
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  azureSubscription: 'YOUR_AZURE_SERVICE_CONNECTION'
+  webAppName: 'skaiciuokle-app'
+  dotnetSdkVersion: '8.x'
+
+stages:
+- stage: Build
+  displayName: 'Build Application'
+  jobs:
+  - job: Build
+    displayName: 'Build Job'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET SDK $(dotnetSdkVersion)'
+      inputs:
+        version: '$(dotnetSdkVersion)'
+        
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet Packages'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Application'
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+        
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Application'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: true
+        
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifacts'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+- stage: Deploy
+  displayName: 'Deploy to Azure'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: Deploy
+    displayName: 'Deploy to Azure App Service'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure Web App'
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              appType: 'webApp'
+              appName: '$(webAppName)'
+              package: '$(Pipeline.Workspace)/drop/**/*.zip'
+              deploymentMethod: 'auto'
