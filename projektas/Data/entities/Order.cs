@@ -17,14 +17,14 @@ namespace projektas.Data.entities
     {
         [Key]
         [Column("id")]
-        public ulong Id { get; set; } // bigint(20) UNSIGNED → ulong
+        public long Id { get; set; } // bigint(20) UNSIGNED → ulong
 
         [Required]
         [Column("user_id")]
-        public ulong UserId { get; set; }
+        public long UserId { get; set; }
 
         [Column("manager_id")]
-        public ulong? ManagerId { get; set; }
+        public long? ManagerId { get; set; }
 
         [Required]
         [Column("status")]

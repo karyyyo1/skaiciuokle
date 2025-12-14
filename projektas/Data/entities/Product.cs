@@ -36,7 +36,7 @@ namespace projektas.Data.entities
     {
         [Key]
         [Column("id")]
-        public ulong Id { get; set; } // bigint(20) UNSIGNED
+        public long Id { get; set; }
 
         [Required]
         [Column("name")]

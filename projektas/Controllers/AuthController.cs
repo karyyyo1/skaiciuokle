@@ -134,7 +134,7 @@ namespace projektas.Controllers
         {
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(userId) || !ulong.TryParse(userId, out var id))
+            if (string.IsNullOrEmpty(userId) || !long.TryParse(userId, out var id))
             {
                 return Unauthorized();
             }
@@ -155,11 +155,11 @@ namespace projektas.Controllers
         // POST: api/auth/create-or-update-client
         [HttpPost("create-or-update-client")]
         [Authorize]
-        public async Task<ActionResult<ulong>> CreateOrUpdateClient([FromBody] ClientInfoDto clientInfo)
+        public async Task<ActionResult<long>> CreateOrUpdateClient([FromBody] ClientInfoDto clientInfo)
         {
             var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(userIdClaim) || !ulong.TryParse(userIdClaim, out var userId))
+            if (string.IsNullOrEmpty(userIdClaim) || !long.TryParse(userIdClaim, out var userId))
             {
                 return Unauthorized();
             }

@@ -9,20 +9,20 @@ namespace projektas.Data.entities
         // id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT -> ulong
         [Key]
         [Column("id")]
-        public ulong Id { get; set; }
+        public long Id { get; set; }
 
         // user_id BIGINT(20) UNSIGNED NOT NULL -> ulong
         [Required]
         [Column("user_id")]
-        public ulong UserId { get; set; }
+        public long UserId { get; set; }
 
         // order_id BIGINT(20) UNSIGNED DEFAULT NULL -> ulong?
         [Column("order_id")]
-        public ulong? OrderId { get; set; }
+        public long? OrderId { get; set; }
 
         // document_id BIGINT(20) UNSIGNED DEFAULT NULL -> ulong?
         [Column("document_id")]
-        public ulong? DocumentId { get; set; }
+        public long? DocumentId { get; set; }
 
         // text TEXT NOT NULL (TEXT is typically mapped to string in C#)
         [Required]

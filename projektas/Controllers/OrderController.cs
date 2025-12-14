@@ -27,7 +27,7 @@ namespace projektas.Controllers
             var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             var userRoleClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
-            if (string.IsNullOrEmpty(userIdClaim) || !ulong.TryParse(userIdClaim, out var userId))
+            if (string.IsNullOrEmpty(userIdClaim) || !long.TryParse(userIdClaim, out var userId))
             {
                 return Unauthorized();
             }
@@ -73,13 +73,13 @@ namespace projektas.Controllers
 
         // GET: api/orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrderResponseDto>> GetOrder(ulong id)
+        public async Task<ActionResult<OrderResponseDto>> GetOrder(long id)
         {
             // Get current user ID and role from JWT token
             var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             var userRoleClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
-            if (string.IsNullOrEmpty(userIdClaim) || !ulong.TryParse(userIdClaim, out var userId))
+            if (string.IsNullOrEmpty(userIdClaim) || !long.TryParse(userIdClaim, out var userId))
             {
                 return Unauthorized();
             }
@@ -119,7 +119,7 @@ namespace projektas.Controllers
 
         // GET: api/orders/comments/by-document/{documentId}
         [HttpGet("comments/by-document/{documentId}")]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByDocument(ulong documentId)
+        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByDocument(long documentId)
         {
             var documentExists = await _context.Documents.AnyAsync(d => d.Id == documentId);
             if (!documentExists) return NotFound("Document not found");
@@ -133,7 +133,7 @@ namespace projektas.Controllers
 
             return Ok(comments);
         }
-        private OrderResponseDto MapToResponseDto(Order order, Dictionary<ulong, string?> managers, Dictionary<ulong, string> users)
+        private OrderResponseDto MapToResponseDto(Order order, Dictionary<long, string?> managers, Dictionary<long, string> users)
         {
             string? managerName = null;
             if (order.ManagerId.HasValue && managers.ContainsKey(order.ManagerId.Value))
@@ -268,7 +268,7 @@ namespace projektas.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(ulong id, [FromBody] OrderDto? orderDto)
+        public async Task<IActionResult> Update(long id, [FromBody] OrderDto? orderDto)
         {
             if (orderDto == null)
                 return BadRequest("Order data is required.");
@@ -344,7 +344,7 @@ namespace projektas.Controllers
         // DELETE: api/orders/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin,manager")]
-        public async Task<IActionResult> Delete(ulong id)
+        public async Task<IActionResult> Delete(long id)
         {
             var order = await _context.Orders.FindAsync(id);
             if (order == null) return NotFound();
@@ -358,7 +358,7 @@ namespace projektas.Controllers
         // DELETE: api/orders/{orderId}/products/{productId}
         [HttpDelete("{orderId}/products/{productId}")]
         [Authorize(Roles = "admin,manager")]
-        public async Task<IActionResult> DeleteOrderProduct(ulong orderId, ulong productId)
+        public async Task<IActionResult> DeleteOrderProduct(long orderId, long productId)
         {
             var existing = await _context.OrderProducts
                 .FirstOrDefaultAsync(op => op.OrderId == orderId && op.ProductId == productId);
@@ -373,7 +373,7 @@ namespace projektas.Controllers
         // DELETE: api/orders/{orderId}/jobs/{jobId}
         [HttpDelete("{orderId}/jobs/{jobId}")]
         [Authorize(Roles = "admin,manager")]
-        public async Task<IActionResult> DeleteOrderJob(ulong orderId, ulong jobId)
+        public async Task<IActionResult> DeleteOrderJob(long orderId, long jobId)
         {
             var existing = await _context.OrderJobs
                 .FirstOrDefaultAsync(oj => oj.OrderId == orderId && oj.JobId == jobId);

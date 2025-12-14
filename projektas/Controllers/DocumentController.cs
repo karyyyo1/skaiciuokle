@@ -28,7 +28,7 @@ namespace projektas.Controllers
         }
         // GET: api/documents/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Document>> GetDocument(ulong id)
+        public async Task<ActionResult<Document>> GetDocument(long id)
         {
             var document = await _context.Documents
                                          .Include(d => d.Order)
@@ -88,7 +88,7 @@ namespace projektas.Controllers
 
         // PUT: api/documents/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDocument(ulong id, [FromBody] DocumentDto? documentDto)
+        public async Task<IActionResult> UpdateDocument(long id, [FromBody] DocumentDto? documentDto)
         {
             if (documentDto == null)
                 return BadRequest("Document data is required.");
@@ -125,7 +125,7 @@ namespace projektas.Controllers
         // DELETE: api/documents/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin,manager")]
-        public async Task<IActionResult> DeleteDocument(ulong id)
+        public async Task<IActionResult> DeleteDocument(long id)
         {
             var document = await _context.Documents.FindAsync(id);
             if (document == null) return NotFound();

@@ -9,12 +9,12 @@ namespace projektas.Data.entities
         // id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT -> ulong
         [Key]
         [Column("id")]
-        public ulong Id { get; set; }
+        public long Id { get; set; }
 
         // order_id BIGINT(20) UNSIGNED NOT NULL -> ulong
         [Required]
         [Column("order_id")]
-        public ulong OrderId { get; set; }
+        public long OrderId { get; set; }
 
         // name VARCHAR(255) NOT NULL
         [Required]

@@ -31,7 +31,7 @@ namespace projektas.Controllers
 
         // GET: api/users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(ulong id)
+        public async Task<ActionResult<User>> GetUser(long id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null) return NotFound();
@@ -53,7 +53,7 @@ namespace projektas.Controllers
         // PUT: api/users/5
         [HttpPut("{id}")]
         [Authorize] // Allow any authenticated user
-        public async Task<IActionResult> UpdateUser(ulong id, [FromBody] UpdateUserDto dto)
+        public async Task<IActionResult> UpdateUser(long id, [FromBody] UpdateUserDto dto)
         {
             // Debug: Print all claims
             Console.WriteLine("=== All Claims in Token ===");
@@ -75,7 +75,7 @@ namespace projektas.Controllers
             Console.WriteLine($"UpdateUser - Requested ID: {id}, Token User ID: {currentUserIdClaim}, Role: {currentUserRole}");
             
             // Parse user ID from token
-            if (string.IsNullOrEmpty(currentUserIdClaim) || !ulong.TryParse(currentUserIdClaim, out var currentUserId))
+            if (string.IsNullOrEmpty(currentUserIdClaim) || !long.TryParse(currentUserIdClaim, out var currentUserId))
             {
                 Console.WriteLine("ERROR: Could not parse user ID from token");
                 return Unauthorized("Invalid user ID in token");
@@ -98,25 +98,44 @@ namespace projektas.Controllers
             var existingUser = await _context.Users.FindAsync(id);
             if (existingUser == null) return NotFound();
 
-            // Update only username (users can't change their own role or email through this endpoint)
-            if (!string.IsNullOrWhiteSpace(dto.Username))
+            // Validate DTO
+            if (dto == null)
             {
-                existingUser.Username = dto.Username;
+                Console.WriteLine("ERROR: UpdateUserDto is null");
+                return BadRequest("User data is required");
             }
-            
+
+            Console.WriteLine($"Received username: '{dto.Username}'");
+
+            // Update only username (users can't change their own role or email through this endpoint)
+            if (string.IsNullOrWhiteSpace(dto.Username))
+            {
+                Console.WriteLine("ERROR: Username is null or whitespace");
+                return BadRequest("Username cannot be empty");
+            }
+
+            existingUser.Username = dto.Username;
             existingUser.UpdatedAt = DateTime.UtcNow;
-
-            _context.Entry(existingUser).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            Console.WriteLine($"Successfully updated username for user {id}");
-            return NoContent();
+            
+            try
+            {
+                await _context.SaveChangesAsync();
+                Console.WriteLine($"Successfully updated username for user {id} to '{dto.Username}'");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR saving changes: {ex.Message}");
+                Console.WriteLine($"Inner exception: {ex.InnerException?.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return StatusCode(500, $"Error updating username: {ex.InnerException?.Message ?? ex.Message}");
+            }
         }
 
         // PUT: api/users/5/password
         [HttpPut("{id}/password")]
         [Authorize] // Allow any authenticated user
-        public async Task<IActionResult> UpdatePassword(ulong id, [FromBody] UpdatePasswordDto dto)
+        public async Task<IActionResult> UpdatePassword(long id, [FromBody] UpdatePasswordDto dto)
         {
             // Try multiple ways to get user ID from claims
             var currentUserIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
@@ -126,7 +145,7 @@ namespace projektas.Controllers
             Console.WriteLine($"UpdatePassword - Requested ID: {id}, Token User ID: {currentUserIdClaim}");
             
             // Parse user ID from token
-            if (string.IsNullOrEmpty(currentUserIdClaim) || !ulong.TryParse(currentUserIdClaim, out var currentUserId))
+            if (string.IsNullOrEmpty(currentUserIdClaim) || !long.TryParse(currentUserIdClaim, out var currentUserId))
             {
                 Console.WriteLine("ERROR: Could not parse user ID from token");
                 return Unauthorized("Invalid user ID in token");
@@ -144,20 +163,32 @@ namespace projektas.Controllers
             var user = await _context.Users.FindAsync(id);
             if (user == null) return NotFound();
 
+            // Validate DTO
+            if (dto == null)
+            {
+                Console.WriteLine("ERROR: UpdatePasswordDto is null");
+                return BadRequest("Password data is required");
+            }
+
+            Console.WriteLine($"Updating password for user {id}");
+
             // Verify current password
             if (!_passwordHasher.VerifyPassword(dto.CurrentPassword, user.Password))
             {
+                Console.WriteLine("ERROR: Current password is incorrect");
                 return BadRequest("Current password is incorrect");
             }
 
             // Validate new password
             if (string.IsNullOrWhiteSpace(dto.NewPassword) || dto.NewPassword.Length < 6)
             {
+                Console.WriteLine("ERROR: New password too short");
                 return BadRequest("New password must be at least 6 characters");
             }
 
             if (dto.NewPassword != dto.ConfirmPassword)
             {
+                Console.WriteLine("ERROR: Passwords do not match");
                 return BadRequest("New password and confirmation do not match");
             }
 
@@ -165,15 +196,24 @@ namespace projektas.Controllers
             user.Password = _passwordHasher.HashPassword(dto.NewPassword);
             user.UpdatedAt = DateTime.UtcNow;
 
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            try
+            {
+                await _context.SaveChangesAsync();
+                Console.WriteLine($"Successfully updated password for user {id}");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR saving password changes: {ex.Message}");
+                Console.WriteLine($"Inner exception: {ex.InnerException?.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return StatusCode(500, $"Error updating password: {ex.InnerException?.Message ?? ex.Message}");
+            }
         }
 
         // PUT: api/users/5/role
         [HttpPut("{id}/role")]
-        public async Task<IActionResult> UpdateUserRole(ulong id, [FromBody] UpdateRoleDto dto)
+        public async Task<IActionResult> UpdateUserRole(long id, [FromBody] UpdateRoleDto dto)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null) return NotFound();
@@ -270,15 +310,24 @@ namespace projektas.Controllers
                 }
             }
 
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            try
+            {
+                await _context.SaveChangesAsync();
+                Console.WriteLine($"Successfully updated role for user {id} from {oldRole} to {newRole}");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR saving role changes: {ex.Message}");
+                Console.WriteLine($"Inner exception: {ex.InnerException?.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return StatusCode(500, $"Error updating role: {ex.InnerException?.Message ?? ex.Message}");
+            }
         }
 
         // DELETE: api/users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(ulong id)
+        public async Task<IActionResult> DeleteUser(long id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null) return NotFound();

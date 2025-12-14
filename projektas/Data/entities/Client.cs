@@ -8,11 +8,11 @@ namespace projektas.Data.entities
     {
         [Key]
         [Column("id")]
-        public ulong Id { get; set; } // bigint(20) UNSIGNED
+        public long Id { get; set; } // bigint(20) UNSIGNED
 
         [Required]
         [Column("user_id")]
-        public ulong UserId { get; set; } // bigint(20) UNSIGNED NOT NULL
+        public long UserId { get; set; } // bigint(20) UNSIGNED NOT NULL
 
         [Required]
         [Column("full_name")]

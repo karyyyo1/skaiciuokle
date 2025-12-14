@@ -28,7 +28,7 @@ namespace projektas.Controllers
 
         // GET: api/Jobs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Job>> Get(ulong id)
+        public async Task<ActionResult<Job>> Get(long id)
         {
             var job = await _context.Jobs.FindAsync(id);
             if (job == null) return NotFound();
@@ -73,7 +73,7 @@ namespace projektas.Controllers
         // PUT: api/Jobs/5
         [HttpPut("{id}")]
         [Authorize(Roles = "admin,manager")]
-        public async Task<ActionResult> Update(ulong id, [FromBody] JobDto dto)
+        public async Task<ActionResult> Update(long id, [FromBody] JobDto dto)
         {
             if (dto == null)
                 return BadRequest("Job data is required.");
@@ -104,7 +104,7 @@ namespace projektas.Controllers
         // DELETE: api/Jobs/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult> Delete(ulong id)
+        public async Task<ActionResult> Delete(long id)
         {
             var job = await _context.Jobs.FindAsync(id);
             if (job == null) return NotFound();

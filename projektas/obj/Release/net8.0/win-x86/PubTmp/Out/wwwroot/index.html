@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skaičiuoklė - Order Management System</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calculator"></i>
+                    <span>Skaičiuoklė</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="nav desktop-nav" id="nav">
+                    <a href="#dashboard" class="nav-link active admin-only" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#products" class="nav-link admin-only" data-page="products">
+                        <i class="fas fa-box"></i>
+                        <span>Products</span>
+                    </a>
+                    <a href="#orders" class="nav-link" data-page="orders">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Orders</span>
+                    </a>
+                    <a href="#documents" class="nav-link admin-only" data-page="documents">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Documents</span>
+                    </a>
+                    <a href="#comments" class="nav-link admin-only" data-page="comments">
+                        <i class="fas fa-comments"></i>
+                        <span>Comments</span>
+                    </a>
+                    <a href="#users" class="nav-link admin-only" data-page="users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </nav>
+                
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="#profile" id="profileBtn">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="#logout" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="#dashboard" class="nav-link active admin-only" data-page="dashboard">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="#products" class="nav-link admin-only" data-page="products">
+            <i class="fas fa-box"></i>
+            <span>Products</span>
+        </a>
+        <a href="#orders" class="nav-link" data-page="orders">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Orders</span>
+        </a>
+        <a href="#documents" class="nav-link admin-only" data-page="documents">
+            <i class="fas fa-file-alt"></i>
+            <span>Documents</span>
+        </a>
+        <a href="#comments" class="nav-link admin-only" data-page="comments">
+            <i class="fas fa-comments"></i>
+            <span>Comments</span>
+        </a>
+        <a href="#users" class="nav-link admin-only" data-page="users">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <div class="container">
+            <!-- Dashboard Page -->
+            <div class="page active admin-only" id="dashboardPage">
+                <h1 class="page-title">Dashboard</h1>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalProducts">0</h3>
+                            <p>Total Products</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalOrders">0</h3>
+                            <p>Total Orders</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalDocuments">0</h3>
+                            <p>Total Documents</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalComments">0</h3>
+                            <p>Total Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-section">
+                    <h2>Welcome back, <span id="dashboardUserName">User</span>!</h2>
+                    <p>Manage your products, orders, documents, and comments from the navigation menu above.</p>
+                </div>
+            </div>
+
+            <!-- Products Page -->
+            <div class="page admin-only" id="productsPage">
+                <div class="page-header">
+                    <h1 class="page-title">Products</h1>
+                    <button class="btn btn-primary" id="addProductBtn">
+                        <i class="fas fa-plus"></i> edit products
+                    </button>
+                </div>
+                
+                <div class="data-table-container">
+                    <table class="data-table" id="productsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <tr>
+                                <td colspan="5" class="loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Orders Page -->
+            <div class="page" id="ordersPage">
+                <div class="page-header">
+                    <h1 class="page-title">Orders</h1>
+                    <button class="btn btn-primary" id="addOrderBtn">
+                        <i class="fas fa-plus"></i> Create Order
+                    </button>
+                </div>
+                
+                <div class="data-table-container">
+                    <table class="data-table" id="ordersTable">
+                        <thead>
+                            <tr>
+                                <th class="admin-only">Order ID</th>
+                                <th class="admin-only">User</th>
+                                <th>Manager</th>
+                                <th>Status</th>
+                                <th>Total Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <tr>
+                                <td colspan="6" class="loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Documents Page -->
+            <div class="page admin-only" id="documentsPage">
+                <div class="page-header">
+                    <h1 class="page-title">Documents</h1>
+                    <button class="btn btn-primary" id="addDocumentBtn">
+                        <i class="fas fa-plus"></i> Add Document
+                    </button>
+                </div>
+                
+                <div class="data-table-container">
+                    <table class="data-table" id="documentsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Order ID</th>
+                                <th>Name</th>
+                                <th>File Path</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documentsTableBody">
+                            <tr>
+                                <td colspan="6" class="loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Comments Page -->
+            <div class="page admin-only" id="commentsPage">
+                <div class="page-header">
+                    <h1 class="page-title">Comments</h1>
+                    <button class="btn btn-primary" id="addCommentBtn">
+                        <i class="fas fa-plus"></i> Add Comment
+                    </button>
+                </div>
+                
+                <div class="data-table-container">
+                    <table class="data-table" id="commentsTable">
+                        <thead>
+                            <tr>
+                                <th>User Email</th>
+                                <th>Order ID</th>
+                                <th>Manager</th>
+                                <th>Document ID</th>
+                                <th>Text</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="commentsTableBody">
+                            <tr>
+                                <td colspan="6" class="loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users Page -->
+            <div class="page admin-only" id="usersPage">
+                <div class="page-header">
+                    <h1 class="page-title">Users Management</h1>
+                </div>
+                
+                <div class="data-table-container">
+                    <table class="data-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="5" class="loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Skaičiuoklė</h3>
+                    <p>A comprehensive order management system for managing products, orders, documents, and communications.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li class="admin-only"><a href="#dashboard"><i class="fas fa-angle-right"></i> Dashboard</a></li>
+                        <li class="admin-only"><a href="#products"><i class="fas fa-angle-right"></i> Products</a></li>
+                        <li><a href="#orders"><i class="fas fa-angle-right"></i> Orders</a></li>
+                        <li class="admin-only"><a href="#documents"><i class="fas fa-angle-right"></i> Documents</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> support@skaiciuokle.com</p>
+                    <p><i class="fas fa-phone"></i> +370 123 45678</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Skaičiuoklė. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Container -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Modal Title</h2>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success message</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

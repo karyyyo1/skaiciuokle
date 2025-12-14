@@ -45,7 +45,7 @@ namespace projektas.Controllers
 
         // GET: api/comments/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Comment>> GetComment(ulong id)
+        public async Task<ActionResult<Comment>> GetComment(long id)
         {
             var comment = await _context.Comments
                 .Include(c => c.User)
@@ -104,7 +104,7 @@ namespace projektas.Controllers
 
         // PUT: api/comments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateComment(ulong id, [FromBody] CommentDto dto)
+        public async Task<IActionResult> UpdateComment(long id, [FromBody] CommentDto dto)
         {
             if (dto == null) return BadRequest();
 
@@ -150,7 +150,7 @@ namespace projektas.Controllers
         // DELETE: api/comments/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin,manager")]
-        public async Task<IActionResult> DeleteComment(ulong id)
+        public async Task<IActionResult> DeleteComment(long id)
         {
             var comment = await _context.Comments.FindAsync(id);
             if (comment == null) return NotFound();

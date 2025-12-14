@@ -17,10 +17,8 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 34))
-    ));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register services
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
@@ -63,7 +61,7 @@ builder.Services.AddAuthentication(options =>
         {
             Console.WriteLine(" JWT Token Validated Successfully");
             Console.WriteLine("Claims in token:");
-            foreach (var claim in context.Principal.Claims)
+            foreach (var claim in context.Principal?.Claims ?? Enumerable.Empty<System.Security.Claims.Claim>())
             {
                 Console.WriteLine($"  {claim.Type}: {claim.Value}");
             }
@@ -103,6 +101,25 @@ app.UseAuthorization();
 
 // Redirect root to login page
 app.MapGet("/", () => Results.Redirect("/login.html"));
+
+// Health endpoints for Azure warmup/health checks
+// Lightweight liveness probe
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", time = DateTime.UtcNow }));
+
+// Readiness probe: verifies DB connectivity
+app.MapGet("/ready", async (AppDbContext db) =>
+{
+    try
+    {
+        await db.Database.ExecuteSqlRawAsync("SELECT 1");
+        return Results.Ok(new { status = "ready" });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"/ready check failed: {ex.Message}");
+        return Results.StatusCode(500);
+    }
+});
 
 // Map API controllers only (no MVC views)
 app.MapControllers();

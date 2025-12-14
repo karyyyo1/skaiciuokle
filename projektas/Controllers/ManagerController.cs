@@ -29,7 +29,7 @@ namespace projektas.Controllers
 
         // GET: api/manager/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Manager>> GetManager(ulong id)
+        public async Task<ActionResult<Manager>> GetManager(long id)
         {
             var manager = await _context.Manager
                 .Include(m => m.User)

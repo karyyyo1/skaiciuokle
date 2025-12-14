@@ -8,11 +8,11 @@ namespace projektas.Data.entities
     {
         [Key]
         [Column("id")]
-        public ulong Id { get; set; } // bigint(20) UNSIGNED, AUTO_INCREMENT
+        public long Id { get; set; } // bigint(20) SIGNED, AUTO_INCREMENT
 
         [Required]
         [Column("user_id")]
-        public ulong UserId { get; set; } // bigint(20) UNSIGNED, UNIQUE
+        public long UserId { get; set; } // bigint(20) SIGNED, UNIQUE
 
         [Column("created_at")]
         public DateTime? CreatedAt { get; set; } // timestamp NULL

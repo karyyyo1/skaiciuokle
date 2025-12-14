@@ -9,7 +9,7 @@ namespace projektas.Data.entities
     {
         [Key]
         [Column("id")]
-        public ulong Id { get; set; } // bigint(20) UNSIGNED → ulong
+        public long Id { get; set; }
 
         [Required]
         [Column("name")]

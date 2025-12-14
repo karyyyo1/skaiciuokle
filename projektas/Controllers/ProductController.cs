@@ -25,7 +25,7 @@ namespace projektas.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> Get(ulong id)
+        public async Task<ActionResult<Product>> Get(long id)
         {
             var product = await _context.Products.FindAsync(id);
             if (product == null) return NotFound();
@@ -138,7 +138,7 @@ namespace projektas.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "admin,manager")]
-        public async Task<ActionResult> Update(ulong id, [FromBody] ProductDto dto)
+        public async Task<ActionResult> Update(long id, [FromBody] ProductDto dto)
         {
             if (dto == null)
                 return BadRequest("Product data is required.");
@@ -231,7 +231,7 @@ namespace projektas.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult> Delete(ulong id)
+        public async Task<ActionResult> Delete(long id)
         {
             var product = await _context.Products.FindAsync(id);
             if (product == null) return NotFound();

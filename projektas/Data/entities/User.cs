@@ -14,7 +14,7 @@ namespace projektas.Data.entities
     {
         [Key]
         [Column("id")]
-        public ulong Id { get; set; }  // BIGINT(20) UNSIGNED → ulong in C#
+        public long Id { get; set; }
 
         [Required]
         [Column("username")]

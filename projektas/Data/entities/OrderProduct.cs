@@ -9,11 +9,11 @@ namespace projektas.Data.entities
     {
         [ForeignKey(nameof(Order))]
         [Column("order_id")]
-        public ulong OrderId { get; set; }
+        public long OrderId { get; set; }
 
         [ForeignKey(nameof(Product))]
         [Column("product_id")]
-        public ulong ProductId { get; set; }
+        public long ProductId { get; set; }
 
         [Column("quantity")]
         public int Quantity { get; set; } = 1;
