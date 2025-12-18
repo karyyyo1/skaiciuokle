@@ -1,0 +1,1969 @@
+openapi: 3.0.3
+info:
+  title: Skaičiuoklė API
+  description: |
+    REST API for fence/gate calculator and order management system.
+    
+    ## Authentication
+    This API uses JWT Bearer token authentication. To access protected endpoints:
+    1. Register or login to obtain a JWT token
+    2. Include the token in the Authorization header: `Bearer <token>`
+    
+    ## User Roles
+    - **admin** (1): Full access to all resources
+    - **manager** (2): Can manage orders, products, jobs assigned to them
+    - **client** (3): Can view own orders and create order requests
+  version: 1.0.0
+  contact:
+    name: API Support
+
+servers:
+  - url: /api
+    description: API Base Path
+
+tags:
+  - name: Auth
+    description: Authentication endpoints (register, login, user info)
+  - name: Users
+    description: User management
+  - name: Orders
+    description: Order management
+  - name: Products
+    description: Product catalog management
+  - name: Jobs
+    description: Job/service management
+  - name: Documents
+    description: Order document management
+  - name: Comments
+    description: Comment management for orders and documents
+  - name: Manager
+    description: Manager information
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from /api/auth/login or /api/auth/register
+
+  schemas:
+    # ==================== AUTH ====================
+    RegisterRequest:
+      type: object
+      required:
+        - username
+        - email
+        - password
+        - confirmPassword
+      properties:
+        username:
+          type: string
+          maxLength: 255
+          example: "john_doe"
+        email:
+          type: string
+          format: email
+          maxLength: 255
+          example: "john@example.com"
+        password:
+          type: string
+          minLength: 6
+          example: "password123"
+        confirmPassword:
+          type: string
+          example: "password123"
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "john@example.com"
+        password:
+          type: string
+          example: "password123"
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT access token
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        expiration:
+          type: string
+          format: date-time
+          description: Token expiration time
+        userId:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          example: "john_doe"
+        email:
+          type: string
+          format: email
+          example: "john@example.com"
+        role:
+          type: string
+          enum: [admin, manager, client]
+          example: "client"
+
+    ClientInfo:
+      type: object
+      properties:
+        address:
+          type: string
+          example: "123 Main St, City"
+        phoneNumber:
+          type: string
+          example: "+37060000000"
+
+    # ==================== USER ====================
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          maxLength: 255
+          example: "john_doe"
+        email:
+          type: string
+          format: email
+          maxLength: 255
+          example: "john@example.com"
+        emailVerifiedAt:
+          type: string
+          format: date-time
+          nullable: true
+        role:
+          $ref: '#/components/schemas/UserRole'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UserRole:
+      type: integer
+      enum: [1, 2, 3]
+      description: |
+        User role:
+        - 1: admin
+        - 2: manager
+        - 3: client
+      example: 3
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "new_username"
+
+    UpdatePasswordRequest:
+      type: object
+      required:
+        - currentPassword
+        - newPassword
+        - confirmPassword
+      properties:
+        currentPassword:
+          type: string
+          example: "oldpassword123"
+        newPassword:
+          type: string
+          minLength: 6
+          example: "newpassword123"
+        confirmPassword:
+          type: string
+          example: "newpassword123"
+
+    UpdateRoleRequest:
+      type: object
+      required:
+        - role
+      properties:
+        role:
+          type: integer
+          enum: [1, 2, 3]
+          description: "1=Admin, 2=Manager, 3=Client"
+          example: 2
+
+    # ==================== ORDER ====================
+    OrderStatus:
+      type: integer
+      enum: [1, 2, 3, 4]
+      description: |
+        Order status:
+        - 1: pending
+        - 2: processing
+        - 3: completed
+        - 4: cancelled
+      example: 1
+
+    OrderRequest:
+      type: object
+      required:
+        - userId
+      properties:
+        userId:
+          type: integer
+          format: int64
+          description: ID of the user placing the order
+          example: 1
+        managerId:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the assigned manager (optional)
+          example: 2
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        totalPrice:
+          type: number
+          format: decimal
+          minimum: 0
+          example: 1500.00
+        orderProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderProductRequest'
+        orderJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderJobRequest'
+
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        userId:
+          type: integer
+          format: int64
+          example: 1
+        userEmail:
+          type: string
+          format: email
+          nullable: true
+          example: "john@example.com"
+        managerId:
+          type: integer
+          format: int64
+          nullable: true
+          example: 2
+        managerName:
+          type: string
+          nullable: true
+          example: "Manager Name"
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        totalPrice:
+          type: number
+          format: decimal
+          example: 1500.00
+        orderProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderProductResponse'
+        orderJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderJobResponse'
+
+    OrderProductRequest:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+          example: 1
+        quantity:
+          type: integer
+          minimum: 1
+          example: 5
+        done:
+          type: boolean
+          default: false
+          example: false
+
+    OrderProductResponse:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+          example: 1
+        quantity:
+          type: integer
+          example: 5
+        done:
+          type: boolean
+          example: false
+
+    OrderJobRequest:
+      type: object
+      properties:
+        jobId:
+          type: integer
+          format: int64
+          example: 1
+        price:
+          type: number
+          format: decimal
+          example: 200.00
+        done:
+          type: boolean
+          default: false
+          example: false
+
+    OrderJobResponse:
+      type: object
+      properties:
+        jobId:
+          type: integer
+          format: int64
+          example: 1
+        price:
+          type: number
+          format: decimal
+          example: 200.00
+        done:
+          type: boolean
+          example: false
+
+    # ==================== PRODUCT ====================
+    ProductType:
+      type: integer
+      enum: [0, 1, 2, 3, 4, 5, 6]
+      description: |
+        Product type:
+        - 0: none
+        - 1: access_control
+        - 2: gate_engine
+        - 3: poles
+        - 4: fence
+        - 5: gate
+        - 6: gadgets
+      example: 4
+
+    GateType:
+      type: integer
+      enum: [1, 2]
+      description: |
+        Gate type:
+        - 1: push
+        - 2: two_gates
+      example: 1
+
+    FenceType:
+      type: integer
+      enum: [1, 2, 3, 4]
+      description: |
+        Fence fill type:
+        - 1: sukos
+        - 2: segmentas
+        - 3: polisadas
+        - 4: skarda
+      example: 2
+
+    ProductRequest:
+      type: object
+      required:
+        - name
+        - price
+        - type
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          example: "Metal Fence Panel"
+        description:
+          type: string
+          maxLength: 1000
+          nullable: true
+          example: "High quality metal fence panel"
+        price:
+          type: number
+          format: decimal
+          minimum: 0.01
+          example: 45.99
+        type:
+          $ref: '#/components/schemas/ProductType'
+        image:
+          type: string
+          maxLength: 300
+          nullable: true
+          example: "/images/fence1.jpg"
+        quantity:
+          type: integer
+          nullable: true
+          example: 100
+        color:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: "RAL 7016"
+        # Type-specific fields
+        fillType:
+          type: integer
+          nullable: true
+          description: "For fence type products"
+          example: 2
+        gateType:
+          type: integer
+          nullable: true
+          description: "For gate/gate_engine type products"
+          example: 1
+        fast:
+          type: boolean
+          nullable: true
+          description: "For gate_engine type products"
+          example: true
+        connection:
+          type: string
+          nullable: true
+          description: "For access_control/gadgets type products"
+          example: "WiFi"
+        relays:
+          type: integer
+          nullable: true
+          description: "For access_control/gadgets type products"
+          example: 4
+        width:
+          type: integer
+          nullable: true
+          description: "For poles/gate type products"
+          example: 60
+        length:
+          type: integer
+          nullable: true
+          description: "For poles type products"
+          example: 2500
+        height:
+          type: integer
+          nullable: true
+          description: "For poles/gate type products"
+          example: 1800
+
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Metal Fence Panel"
+        description:
+          type: string
+          nullable: true
+          example: "High quality metal fence panel"
+        price:
+          type: number
+          format: decimal
+          example: 45.99
+        type:
+          $ref: '#/components/schemas/ProductType'
+        image:
+          type: string
+          nullable: true
+          example: "/images/fence1.jpg"
+        quantity:
+          type: integer
+          nullable: true
+          example: 100
+        color:
+          type: string
+          nullable: true
+          example: "RAL 7016"
+        connection:
+          type: string
+          nullable: true
+        relays:
+          type: integer
+          nullable: true
+
+    # ==================== JOB ====================
+    JobRequest:
+      type: object
+      required:
+        - name
+        - price
+      properties:
+        name:
+          type: string
+          example: "Fence Installation"
+        description:
+          type: string
+          nullable: true
+          example: "Professional fence installation service"
+        price:
+          type: number
+          format: decimal
+          minimum: 0.01
+          example: 150.00
+
+    JobResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Fence Installation"
+        description:
+          type: string
+          nullable: true
+          example: "Professional fence installation service"
+        price:
+          type: number
+          format: decimal
+          example: 150.00
+
+    # ==================== DOCUMENT ====================
+    DocumentRequest:
+      type: object
+      required:
+        - orderId
+        - name
+        - filePath
+      properties:
+        orderId:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Contract.pdf"
+        filePath:
+          type: string
+          example: "/documents/orders/1/contract.pdf"
+
+    DocumentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        orderId:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Contract.pdf"
+        filePath:
+          type: string
+          example: "/documents/orders/1/contract.pdf"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    # ==================== COMMENT ====================
+    CommentRequest:
+      type: object
+      required:
+        - userId
+        - text
+      properties:
+        orderId:
+          type: integer
+          format: int64
+          nullable: true
+          description: "Required if documentId is not provided"
+          example: 1
+        documentId:
+          type: integer
+          format: int64
+          nullable: true
+          description: "Required if orderId is not provided"
+          example: null
+        userId:
+          type: integer
+          format: int64
+          example: 1
+        text:
+          type: string
+          example: "Please review the attached document"
+
+    CommentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        userId:
+          type: integer
+          format: int64
+          example: 1
+        user:
+          type: object
+          nullable: true
+          properties:
+            email:
+              type: string
+              format: email
+            username:
+              type: string
+        orderId:
+          type: integer
+          format: int64
+          nullable: true
+          example: 1
+        documentId:
+          type: integer
+          format: int64
+          nullable: true
+          example: null
+        text:
+          type: string
+          example: "Please review the attached document"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    # ==================== MANAGER ====================
+    ManagerResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        userId:
+          type: integer
+          format: int64
+          example: 2
+        user:
+          $ref: '#/components/schemas/User'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    # ==================== ERROR ====================
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Error description"
+
+  responses:
+    BadRequest:
+      description: Bad Request - Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not Found - Resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+security:
+  - BearerAuth: []
+
+paths:
+  # ==================== AUTH ENDPOINTS ====================
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      description: |
+        Creates a new user account with client role by default.
+        Returns JWT token upon successful registration.
+      operationId: register
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+            example:
+              username: "john_doe"
+              email: "john@example.com"
+              password: "password123"
+              confirmPassword: "password123"
+      responses:
+        '200':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: |
+            Bad Request:
+            - User with this email already exists
+            - Username is already taken
+            - Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login user
+      description: |
+        Authenticates user with email and password.
+        Returns JWT token valid for 60 minutes.
+      operationId: login
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              email: "john@example.com"
+              password: "password123"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          description: Invalid email or password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/me:
+    get:
+      tags:
+        - Auth
+      summary: Get current user info
+      description: Returns the currently authenticated user's information
+      operationId: getCurrentUser
+      responses:
+        '200':
+          description: Current user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /auth/create-or-update-client:
+    post:
+      tags:
+        - Auth
+      summary: Create or update client profile
+      description: Creates or updates client information (address, phone) for the authenticated user
+      operationId: createOrUpdateClient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientInfo'
+            example:
+              address: "123 Main St, City"
+              phoneNumber: "+37060000000"
+      responses:
+        '200':
+          description: Client profile created/updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientId:
+                    type: integer
+                    format: int64
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== USER ENDPOINTS ====================
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Returns list of all users. Requires admin or manager role.
+      operationId: getUsers
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Creates a new user account
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get user by ID
+      description: Returns a specific user by their ID
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Users
+      summary: Update user
+      description: |
+        Updates user information (username only).
+        Users can only update their own profile unless they are admin.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+            example:
+              username: "new_username"
+      responses:
+        '204':
+          description: User updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Users
+      summary: Delete user
+      description: Deletes a user account
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      responses:
+        '204':
+          description: User deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /users/{id}/password:
+    put:
+      tags:
+        - Users
+      summary: Update user password
+      description: |
+        Updates user password. Users can only update their own password.
+        Requires current password verification.
+      operationId: updatePassword
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePasswordRequest'
+      responses:
+        '204':
+          description: Password updated successfully
+        '400':
+          description: |
+            Bad Request:
+            - Current password is incorrect
+            - New password must be at least 6 characters
+            - New password and confirmation do not match
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /users/{id}/role:
+    put:
+      tags:
+        - Users
+      summary: Update user role
+      description: |
+        Updates user role. Automatically manages role-specific table entries
+        (Manager, Administrator, Client tables).
+      operationId: updateUserRole
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleRequest'
+            example:
+              role: 2
+      responses:
+        '204':
+          description: Role updated successfully
+        '400':
+          description: Invalid role value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== ORDER ENDPOINTS ====================
+  /orders:
+    get:
+      tags:
+        - Orders
+      summary: Get all orders
+      description: |
+        Returns orders based on user role:
+        - **Admin**: All orders
+        - **Manager**: Orders assigned to them
+        - **Client**: Only their own orders
+      operationId: getOrders
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      description: Creates a new order with optional products and jobs
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+            example:
+              userId: 1
+              managerId: 2
+              status: 1
+              totalPrice: 1500.00
+              orderProducts:
+                - productId: 1
+                  quantity: 5
+                  done: false
+              orderJobs:
+                - jobId: 1
+                  price: 200.00
+                  done: false
+      responses:
+        '200':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          description: |
+            Bad Request:
+            - UserId must be greater than zero
+            - ManagerId must be greater than zero if provided
+            - Manager does not exist
+            - TotalPrice cannot be negative
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /orders/{id}:
+    get:
+      tags:
+        - Orders
+      summary: Get order by ID
+      description: |
+        Returns a specific order. Clients can only access their own orders.
+      operationId: getOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Order ID
+      responses:
+        '200':
+          description: Order found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Orders
+      summary: Update order
+      description: Updates an existing order including its products and jobs
+      operationId: updateOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Order ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '204':
+          description: Order updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Orders
+      summary: Delete order
+      description: Deletes an order. Requires admin or manager role.
+      operationId: deleteOrder
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Order ID
+      responses:
+        '204':
+          description: Order deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /orders/{orderId}/products/{productId}:
+    delete:
+      tags:
+        - Orders
+      summary: Remove product from order
+      description: Removes a specific product from an order. Requires admin or manager role.
+      operationId: deleteOrderProduct
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Order ID
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Product ID
+      responses:
+        '204':
+          description: Product removed from order
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /orders/{orderId}/jobs/{jobId}:
+    delete:
+      tags:
+        - Orders
+      summary: Remove job from order
+      description: Removes a specific job from an order. Requires admin or manager role.
+      operationId: deleteOrderJob
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Order ID
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Job ID
+      responses:
+        '204':
+          description: Job removed from order
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /orders/comments/by-document/{documentId}:
+    get:
+      tags:
+        - Orders
+      summary: Get comments by document
+      description: Returns all comments for a specific document
+      operationId: getCommentsByDocument
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Document ID
+      responses:
+        '200':
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ==================== PRODUCT ENDPOINTS ====================
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Get all products
+      description: Returns list of all products in the catalog
+      operationId: getProducts
+      security: []
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductResponse'
+
+    post:
+      tags:
+        - Products
+      summary: Create a new product
+      description: |
+        Creates a new product. Requires admin or manager role.
+        Product type determines which additional fields are applicable.
+      operationId: createProduct
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+            examples:
+              fence:
+                summary: Fence product
+                value:
+                  name: "Metal Fence Panel"
+                  description: "High quality metal fence panel"
+                  price: 45.99
+                  type: 4
+                  quantity: 100
+                  color: "RAL 7016"
+                  fillType: 2
+              gate_engine:
+                summary: Gate engine product
+                value:
+                  name: "Automatic Gate Motor"
+                  description: "Heavy duty gate motor"
+                  price: 350.00
+                  type: 2
+                  quantity: 20
+                  gateType: 1
+                  fast: true
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: |
+            Bad Request:
+            - Price must be greater than zero
+            - Quantity cannot be negative
+            - Unsupported product type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Get product by ID
+      description: Returns a specific product by its ID
+      operationId: getProduct
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Product ID
+      responses:
+        '200':
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Products
+      summary: Update product
+      description: Updates an existing product. Requires admin or manager role.
+      operationId: updateProduct
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Product ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '204':
+          description: Product updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      tags:
+        - Products
+      summary: Delete product
+      description: Deletes a product. Requires admin role.
+      operationId: deleteProduct
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Product ID
+      responses:
+        '204':
+          description: Product deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== JOB ENDPOINTS ====================
+  /jobs:
+    get:
+      tags:
+        - Jobs
+      summary: Get all jobs
+      description: Returns list of all available jobs/services
+      operationId: getJobs
+      security: []
+      responses:
+        '200':
+          description: List of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobResponse'
+
+    post:
+      tags:
+        - Jobs
+      summary: Create a new job
+      description: Creates a new job/service. Requires admin or manager role.
+      operationId: createJob
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+            example:
+              name: "Fence Installation"
+              description: "Professional fence installation service"
+              price: 150.00
+      responses:
+        '201':
+          description: Job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: |
+            Bad Request:
+            - Job data is required
+            - Price must be greater than zero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /jobs/{id}:
+    get:
+      tags:
+        - Jobs
+      summary: Get job by ID
+      description: Returns a specific job by its ID
+      operationId: getJob
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Job ID
+      responses:
+        '200':
+          description: Job found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Jobs
+      summary: Update job
+      description: Updates an existing job. Requires admin or manager role.
+      operationId: updateJob
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Job ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+      responses:
+        '204':
+          description: Job updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      tags:
+        - Jobs
+      summary: Delete job
+      description: Deletes a job. Requires admin role.
+      operationId: deleteJob
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Job ID
+      responses:
+        '204':
+          description: Job deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== DOCUMENT ENDPOINTS ====================
+  /documents:
+    get:
+      tags:
+        - Documents
+      summary: Get all documents
+      description: Returns list of all documents with their associated orders
+      operationId: getDocuments
+      responses:
+        '200':
+          description: List of documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Documents
+      summary: Create a new document
+      description: Creates a new document associated with an order
+      operationId: createDocument
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentRequest'
+            example:
+              orderId: 1
+              name: "Contract.pdf"
+              filePath: "/documents/orders/1/contract.pdf"
+      responses:
+        '201':
+          description: Document created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+        '400':
+          description: |
+            Bad Request:
+            - Document data is required
+            - OrderId is required
+            - OrderId does not exist
+            - Document name is required
+            - FilePath is required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /documents/{id}:
+    get:
+      tags:
+        - Documents
+      summary: Get document by ID
+      description: Returns a specific document by its ID
+      operationId: getDocument
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Document ID
+      responses:
+        '200':
+          description: Document found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Documents
+      summary: Update document
+      description: Updates an existing document
+      operationId: updateDocument
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Document ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentRequest'
+      responses:
+        '204':
+          description: Document updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Documents
+      summary: Delete document
+      description: Deletes a document. Requires admin or manager role.
+      operationId: deleteDocument
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Document ID
+      responses:
+        '204':
+          description: Document deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== COMMENT ENDPOINTS ====================
+  /comments:
+    get:
+      tags:
+        - Comments
+      summary: Get all comments
+      description: Returns list of all comments with user information
+      operationId: getComments
+      responses:
+        '200':
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Comments
+      summary: Create a new comment
+      description: |
+        Creates a new comment. Must be associated with either an order OR a document (not both).
+      operationId: createComment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+            examples:
+              order_comment:
+                summary: Comment on order
+                value:
+                  orderId: 1
+                  userId: 1
+                  text: "Please review the order details"
+              document_comment:
+                summary: Comment on document
+                value:
+                  documentId: 1
+                  userId: 1
+                  text: "Document needs revision"
+      responses:
+        '201':
+          description: Comment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: |
+            Bad Request:
+            - Text is required
+            - Provide exactly one parent: either OrderId or DocumentId
+            - UserId does not exist
+            - OrderId does not exist
+            - DocumentId does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /comments/{id}:
+    get:
+      tags:
+        - Comments
+      summary: Get comment by ID
+      description: Returns a specific comment by its ID
+      operationId: getComment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Comment ID
+      responses:
+        '200':
+          description: Comment found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Comments
+      summary: Update comment
+      description: Updates an existing comment
+      operationId: updateComment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Comment ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+      responses:
+        '204':
+          description: Comment updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Comments
+      summary: Delete comment
+      description: Deletes a comment. Requires admin or manager role.
+      operationId: deleteComment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Comment ID
+      responses:
+        '204':
+          description: Comment deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== MANAGER ENDPOINTS ====================
+  /manager:
+    get:
+      tags:
+        - Manager
+      summary: Get all managers
+      description: Returns list of all managers with their user information
+      operationId: getManagers
+      responses:
+        '200':
+          description: List of managers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ManagerResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /manager/{id}:
+    get:
+      tags:
+        - Manager
+      summary: Get manager by ID
+      description: Returns a specific manager by their ID
+      operationId: getManager
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Manager ID
+      responses:
+        '200':
+          description: Manager found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagerResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
